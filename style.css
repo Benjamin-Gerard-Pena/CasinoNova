@@ -6,8 +6,8 @@ body {
 .fondo-gris {
     background-color: #1F1F2B;
 }
-.texto-rojo {
-    color: #BA3F29;
+.texto-rosado {
+    color: #CF1EF7;
 }
 .contenedor{
     display: flex;
@@ -16,6 +16,11 @@ body {
     display: flex;
     height: 100vh;
 }
+.mi-botton{
+    background-color: #006194;
+    color : #CF1EF7 ;
+    border: none;
+ }
 .formulario_inicio_sesion {
     width: 40%;
     display: flex;
