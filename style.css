@@ -9,6 +9,12 @@ body {
 .texto-rosado {
     color: #CF1EF7;
 }
+.texto-INICIO {
+    color: #FCFCFC;
+    align-items: center;
+    justify-content: center;
+
+}
 .contenedor{
     display: flex;
 }
