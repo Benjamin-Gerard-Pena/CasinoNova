@@ -49,3 +49,26 @@ body {
     padding: 55px 1550px;
     text-align: center;
 }
+.juegos{
+    text-align:left;
+    max-width:600px;
+    margin:40px auto;
+    font-size:1.2rem;
+    padding:0 20px:
+}
+.botones{
+    display:flex;
+    gap:20px;
+    flex-wrap: wrap;
+    margin:40px auto;
+    max-width:900px;
+    padding:20px;
+    border-radius:8px;
+}
+.botton-interactivo{
+    background-color:#142530;
+    color:white;
+    border: none;
+    padding:12px 24px;
+    font-size:1rem;
+}
