@@ -1,3 +1,8 @@
+header{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 body {
     background-color: #142530;
     color: white;
@@ -10,6 +15,7 @@ body {
     color: #CF1EF7;
 }
 .texto-INICIO {
+    display: flex;
     color: #FCFCFC;
     align-items: center;
     justify-content: center;
@@ -37,4 +43,9 @@ body {
 .imagen_inicio_sesion {
     display: flex;
     width: 60%;
+}
+.zona_superior {
+    background-color: #06181F;
+    padding: 55px 1550px;
+    text-align: center;
 }
