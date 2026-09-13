@@ -14,6 +14,14 @@ body {
 .texto-rosado {
     color: #CF1EF7;
 }
+.contenedor-marca {
+    color: #CF1EF7;
+    align-content: flex-start;
+}
+.contenedor-perfil {
+    color: #CF1EF7;
+    align-content: flex-start;
+}
 .texto-INICIO {
     display: flex;
     color: #FCFCFC;
@@ -21,12 +29,12 @@ body {
     justify-content: center;
 
 }
-.contenedor{
+.contenedor_superior{
     display: flex;
-}
-.contenedor-principal {
-    display: flex;
-    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
 }
 .mi-botton{
     background-color: #006194;
@@ -46,29 +54,27 @@ body {
 }
 .zona_superior {
     background-color: #06181F;
-    padding: 55px 1550px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    box-sizing: border-box;
 }
 .juegos{
-    text-align:left;
-    max-width:600px;
-    margin:40px auto;
-    font-size:1.2rem;
-    padding:0 20px:
+    text-align: left;
+    max-width: 600px;
+    margin: 40px;
+    font-size: 1.2rem;
 }
 .botones{
     display:flex;
     gap:20px;
-    flex-wrap: wrap;
-    margin:40px auto;
-    max-width:900px;
-    padding:20px;
-    border-radius:8px;
+    align-items: center;
+    justify-content: center;
 }
 .botton-interactivo{
     background-color:#021d28;
     color:white;
     border: none;
-    padding:12px 24px;
-    font-size:1rem;
+    padding:60px;
 }
