@@ -97,7 +97,7 @@ body {
     display: flex;
     align-items: center;
     gap:12px;
-
+    color: #CF1EF7;
 }
 .bloque-saldo{
     display: flex;
