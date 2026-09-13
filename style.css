@@ -115,14 +115,23 @@ body {
     font-weight: bold;
 }
 
-.info-juego {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 10px;
-    box-sizing: border-box;
+.info-juego  {   
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     text-align: center;
+}
+
+.info-juego h4  {   
+   margin: 0;
+   color: #CF1EF7;
+   font-size: 16px;
+}
+
+.info-juego p  {   
+    margin: 0;
+    fonrt-size: 12px;
+    color:#FCFCFC
+    line-height: 1.2;
 }
