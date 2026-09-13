@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <style>
+      body {
+          font-family: "Helvetica Neue", Helvetica,serif;
+      }
+  </style>
     <meta charset="UTF-8">
     <title>Casino Nova</title>
     <link rel="stylesheet" href="style.css">
@@ -20,14 +25,37 @@
   <div>
   <label for="barra">Ingrese para buscar:</label>
   <input
-    type="text"
-    id="barra">
+    type="search"
+    class="barra"
+    placeholder="Buscar..."
+    id="barra"
+    >
   <nav class="contenedor_superior">
-    <button> Favoritos </button>
-    <button> Recomendado </button>
-    <button> Tendencias </button>
-    <button> Deportes </button>
-    <button> Crash </button>
+    <a href="#seccion-favoritos" >
+      <button> Favoritos </button>
+    </a>
+    <a href="#seccion-recomendados" >
+      <button> Recomendado </button>
+    </a>
+    <a href="#seccion-tendencias" >
+      <button> Tendencias </button>
+    </a>
+    <a href="#seccion-esports" >
+      <button> Esports </button>
+    </a>
+    <a href="#seccion-deportes" >
+      <button> Deportes </button>
+    </a>
+    <a href="#seccion-mesa" >
+      <button> Mesa </button>
+    </a>
+    <a href="#seccion-slots" >
+      <button> Slots </button>
+    </a>
+    <a href="#seccion-crash" >
+      <button> Crash </button>
+    </a>
+
   </nav>
   </div>
 
@@ -41,55 +69,176 @@
   </div>
 </header>
 
-<header>
-  <h1 class="texto-rosado">Juegos: </h1>
-</header>
 <main>
-  <div class="juegos">
+  <div class="juegos" id="seccion-favoritos">
         <h3>Favoritos</h3>
   </div>
         <section class="botones">
-            <button class="botton-interactivo">juego 1</button>
-            <button class="botton-interactivo">juego 2</button>
-            <button class="botton-interactivo">juego 3</button>
-            <button class="botton-interactivo">juego 4</button>
+            <button
+              class="botton-interactivo">
+              <img src="images/ruleta.jpg" alt="ruleta">
+            </button>
+            <button
+              class="botton-interactivo">
+              <img src="images/Blackjack.jpg" alt="blackjack">
+            </button>
+            <button
+              class="botton-interactivo">
+              <img src="images/slots.jpg" alt="slots">
+            </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
         </section>
-    <div class="juegos">
+    <div class="juegos" id="seccion-recomendados">
             <h3>Recomendado</h3>
         </div>
         <section class="botones">
-            <button class="botton-interactivo">juego 1</button>
-            <button class="botton-interactivo">juego 2</button>
-            <button class="botton-interactivo">juego 3</button>
-            <button class="botton-interactivo">juego 4</button>
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
         </section>
-        <div class="juegos">
+        <div class="juegos" id="seccion-tendencias">
             <h3>Tendencias</h3>
         </div>
         <section class="botones">
-            <button class="botton-interactivo">juego 1</button>
-            <button class="botton-interactivo">juego 2</button>
-            <button class="botton-interactivo">juego 3</button>
-            <button class="botton-interactivo">juego 4</button>
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
         </section>
-        <div class="juegos">
+        <div class="juegos" id="seccion-esports">
+          <h3>Esports</h3>
+        </div>
+        <section class="botones">
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
+        </section>
+        <div class="juegos" id="seccion-deportes">
             <h3>Deportes</h3>
         </div>
         <section class="botones">
-            <button class="botton-interactivo">juego 1</button>
-            <button class="botton-interactivo">juego 2</button>
-            <button class="botton-interactivo">juego 3</button>
-            <button class="botton-interactivo">juego 4</button>
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
         </section>
-        <div class="juegos">
+        <div class="juegos" id="seccion-mesa">
+          <h3>Mesa</h3>
+        </div>
+        <section class="botones">
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
+        </section>
+    <div class="juegos" id="seccion-slots">
+      <h3>Slots</h3>
+    </div>
+    <section class="botones">
+      <button
+        class="botton-interactivo">
+        <img src="images/ruleta.jpg" alt="ruleta">
+      </button>
+      <button
+        class="botton-interactivo">
+        <img src="images/Blackjack.jpg" alt="blackjack">
+      </button>
+      <button
+        class="botton-interactivo">
+        <img src="images/slots.jpg" alt="slots">
+      </button>
+      <button
+        class="botton-interactivo">
+        <img src="images/aviator.webp" alt="aviator">
+      </button>
+    </section>
+        <div class="juegos" id="seccion-crash">
             <h3>Crash</h3>
         </div>
         <section class="botones">
-            <button class="botton-interactivo">juego 1</button>
-            <button class="botton-interactivo">juego 2</button>
-            <button class="botton-interactivo">juego 3</button>
-            <button class="botton-interactivo">juego 4</button>
+          <button
+            class="botton-interactivo">
+            <img src="images/ruleta.jpg" alt="ruleta">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/Blackjack.jpg" alt="blackjack">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/slots.jpg" alt="slots">
+          </button>
+          <button
+            class="botton-interactivo">
+            <img src="images/aviator.webp" alt="aviator">
+          </button>
         </section>
+
 </main>
 </body>
 </html>

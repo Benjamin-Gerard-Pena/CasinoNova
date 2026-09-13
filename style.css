@@ -1,8 +1,3 @@
-header{
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 body {
     background-color: #142530;
     color: white;
@@ -36,6 +31,9 @@ body {
     margin-top: 10px;
     gap: 10px;
 }
+.barra{
+    width: 400px;
+}
 .mi-botton{
     background-color: #006194;
     color : #CF1EF7 ;
@@ -59,6 +57,9 @@ body {
     justify-content: space-between;
     padding: 10px 40px;
     box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 .juegos{
     text-align: left;
@@ -74,7 +75,12 @@ body {
 }
 .botton-interactivo{
     background-color:#021d28;
+    border-radius: 12px;
     color:white;
     border: none;
-    padding:60px;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    display: flex;
+
 }
