@@ -82,5 +82,21 @@ body {
     height: 160px;
     overflow: hidden;
     display: flex;
-
+}
+.boton-deposito{
+    background-color:#CF1EF7 ;
+    color: #06181F;
+    border: none;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.bloque\/saldo{
+    display: flex;
+    flex-direction: column;
+}
+.saldo {
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
 }
