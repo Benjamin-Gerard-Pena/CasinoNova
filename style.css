@@ -13,10 +13,45 @@ main {
     color: #CF1EF7;
     align-content: flex-start;
 }
-.contenedor-perfil {
+.contenedor-sesion{
+    display: flex;
+    align-items: center;
+    color: #CF1EF7;
+    justify-content: space-around;
+    padding: 0px;
+    width: 100%;
+}
+.imagen_inicio_sesion{
+    display: flex;
+    gap: 0px;
+    padding: 0px;
+    margin: 0;
+    overflow: hidden;
+    width: 70%;
+}
+.imagen_inicio_sesion img{
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    min-height: calc(100vh - 120px);
+}
+.formulario_inicio_sesion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    gap: 10px;
+    padding: 30px;
+    max-width: none;
+}
+.contenedor-perfil{
+    display: flex;
+    align-items: center;
+    gap:12px;
     color: #CF1EF7;
     align-content: flex-start;
 }
+
 .contenedor_superior{
     display: flex;
     align-items: center;
@@ -76,12 +111,6 @@ main {
     font-weight: bold;
     border-radius: 10px;
     align-items: center;
-}
-.contenedor-perfil{
-    display: flex;
-    align-items: center;
-    gap:12px;
-    color: #CF1EF7;
 }
 .bloque-saldo{
     display: flex;
