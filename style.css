@@ -2,12 +2,12 @@ body {
     background-color: #142530;
     color: white;
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-.fondo-gris {
-    background-color: #1F1F2B;
-}
-.texto-rosado {
-    color: #CF1EF7;
+main {
+    flex: 1;
 }
 .contenedor-marca {
     color: #CF1EF7;
@@ -16,13 +16,6 @@ body {
 .contenedor-perfil {
     color: #CF1EF7;
     align-content: flex-start;
-}
-.texto-INICIO {
-    display: flex;
-    color: #FCFCFC;
-    align-items: center;
-    justify-content: center;
-
 }
 .contenedor_superior{
     display: flex;
@@ -33,22 +26,6 @@ body {
 }
 .barra{
     width: 400px;
-}
-.mi-botton{
-    background-color: #006194;
-    color : #CF1EF7 ;
-    border: none;
- }
-.formulario_inicio_sesion {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.imagen_inicio_sesion {
-    display: flex;
-    width: 60%;
 }
 .zona_superior {
     background-color: #06181F;
@@ -80,15 +57,15 @@ body {
     color:white;
     border: none;
     width: 400px;
-    height: 500px;
+    height: 400px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     padding: 0;
 }
-.boton.interactivo img{
+.botton-interactivo img{
     width: 100%;
-    height: 120px;
+    height: 65%;
     object-fit: cover;
 }
 .boton-deposito{
@@ -113,32 +90,37 @@ body {
 }
 .moneda{
     color: white;
-    font-size: 9px;
+    font-size: 15px;
     font-weight: bold;
 }
 .saldo {
     color: white;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: bold;
 }
 
-.info-juego  {   
+.info-juego  {
     padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     text-align: center;
+    justify-content: center;
 }
 
-.info-juego h4 {   
-   margin: 0;
-   color: #CF1EF7;
-   font-size: 16px;
+.info-juego h4 {
+    margin: 0;
+    color: #CF1EF7;
+    font-size: 16px;
 }
 
-.info-juego p {   
+.info-juego p {
     margin: 0;
     font-size: 12px;
     color:#FCFCFC;
     line-height: 1.2;
+}
+.pie-pagina {
+    background-color: #06181F;
+    text-align: center;
 }

@@ -23,48 +23,31 @@
   </div>
 
   <div>
-  <label for="barra">Ingrese para buscar:</label>
-  <input
-    type="search"
-    class="barra"
-    placeholder="Buscar..."
-    id="barra"
-    >
-  <nav class="contenedor_superior">
-    <a href="#seccion-favoritos" >
-      <button> Favoritos </button>
-    </a>
-    <a href="#seccion-recomendados" >
-      <button> Recomendado </button>
-    </a>
-    <a href="#seccion-tendencias" >
-      <button> Tendencias </button>
-    </a>
-    <a href="#seccion-esports" >
-      <button> Esports </button>
-    </a>
-    <a href="#seccion-deportes" >
-      <button> Deportes </button>
-    </a>
-    <a href="#seccion-mesa" >
-      <button> Mesa </button>
-    </a>
-    <a href="#seccion-slots" >
-      <button> Slots </button>
-    </a>
-    <a href="#seccion-crash" >
-      <button> Crash </button>
-    </a>
+      <label for="barra">Ingrese para buscar:</label>
+          <input
+            type="search"
+            class="barra"
+            placeholder="Buscar..."
+            id="barra"
+            >
 
-  </nav>
+      <nav class="contenedor_superior">
+          <button> Ranking </button>
+          <button> Amigos </button>
+          <button> Historial </button>
+          <button> Billetera </button>
+          <button> Préstamos </button>
+
+      </nav>
   </div>
 
   <div class="contenedor-perfil">
       <div class="bloque-saldo">
-          <span class="moneda"> CLP ($)</span>
-          <span class="saldo" >$1.000.000</span>
+          <span class="saldo" >$1.000.000 - <span style="color: slateblue"> CLP($)</span></span>
       </div>
-      <button class="boton-deposito">deposito</button>
+
+
+      <button class="boton-deposito">Deposito</button>
     <img
       src="images/foto_perfil.png"
       alt="foto_perfil"
@@ -75,8 +58,8 @@
 </header>
 
 <main>
-  <div class="juegos" id="seccion-favoritos">
-        <h3>Favoritos</h3>
+  <div class="juegos" id="juegos">
+        <h3> Juegos: </h3>
   </div>
         <section class="botones">
             <button
@@ -85,7 +68,7 @@
               <div 
               class="info-juego">
                 <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
+                <p>Apuesta min: 1.000 CLP($) | Apuesta max: 500.000 CLP($)</p>
                 <p>Regla: Elige un numero o color.</p>
               </div>
             </button>
@@ -95,8 +78,8 @@
               <div 
               class="info-juego">
                 <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
+                <p>Apuesta min: 1.000 CLP($) | Apuesta max: 750.000 CLP($)</p>
+                <p>Juego de cartas | Regla: El número más cercano a 21 sin pasarse.</p>
               </div>
             </button>
             <button
@@ -105,7 +88,7 @@
               <div 
               class="info-juego">
                 <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
+                <p>Apuesta min: 5.000 CLP($)| Apuesta max: 300.000CLP($)</p>
                 <p>Regla:Combina simbolos para ganar.</p>
               </div>
             </button>
@@ -115,322 +98,15 @@
             <div 
             class="info-juego">
               <h4>Aviator</h4>
-              <p>Apuesta min:25 | Apuesta max:600</p>
+              <p>Apuesta min: 2.500 CLP($)| Apuesta max: 600.000 CLP($)</p>
               <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
             </div>
           </button>
         </section>
-    <div class="juegos" id="seccion-recomendados">
-            <h3>Recomendado</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div 
-            class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div 
-            class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
-        <div class="juegos" id="seccion-tendencias">
-            <h3>Tendencias</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div 
-            class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div 
-            class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
-        <div class="juegos" id="seccion-esports">
-          <h3>Esports</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div 
-            class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div 
-            class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div 
-            class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
-        <div class="juegos" id="seccion-deportes">
-            <h3>Deportes</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div 
-            class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div 
-            class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div 
-            class="info-juego"> 
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-            </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
-        <div class="juegos" id="seccion-mesa">
-          <h3>Mesa</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div 
-            class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div 
-            class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
-    <div class="juegos" id="seccion-slots">
-      <h3>Slots</h3>
-    </div>
-    <section class="botones">
-      <button
-        class="botton-interactivo">
-        <img src="images/ruleta.jpg" alt="ruleta">
-        <div 
-        class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-      </button>
-      <button
-        class="botton-interactivo">
-        <img src="images/Blackjack.jpg" alt="blackjack">
-        <div 
-        class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-      </button>
-      <button
-        class="botton-interactivo">
-        <img src="images/slots.jpg" alt="slots">
-        <div class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-      </button>
-      <button
-        class="botton-interactivo">
-        <img src="images/aviator.webp" alt="aviator">
-        <div 
-        class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-      </button>
-    </section>
-        <div class="juegos" id="seccion-crash">
-            <h3>Crash</h3>
-        </div>
-        <section class="botones">
-          <button
-            class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div 
-            class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min:10 | Apuesta max:500</p>
-                <p>Regla: Elige un numero o color.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div 
-            class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min:100 | Apuesta max:750</p>
-                <p>Regla: El numero mas cercano a 21 sin pasarse.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div 
-            class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min:5 | Apuesta max:300</p>
-                <p>Regla: Combina simbolos para ganar.</p>
-              </div>
-          </button>
-          <button
-            class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div 
-            class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min:25 | Apuesta max:600</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-              </div>
-          </button>
-        </section>
+
 </main>
+<footer class="pie-pagina">
+    <p>© 2026 Casino Nova - Todos los derechos reservados</p>
+</footer>
 </body>
 </html>
