@@ -1,32 +1,84 @@
-//TIP With Search Everywhere, you can find any action, file, or symbol in your project. Press <shortcut actionId="Shift"/> <shortcut actionId="Shift"/>, type in <b>terminal</b>, and press <shortcut actionId="EditorEnter"/>. Then run <shortcut raw="npm run dev"/> in the terminal and click the link in its output to open the app in the browser.
-export function setupCounter(element) {
-  //TIP Try <shortcut actionId="GotoDeclaration"/> on <shortcut raw="counter"/> to see its usages. You can also use this shortcut to jump to a declaration – try it on <shortcut raw="counter"/> on line 13.
-  let counter = 0;
+import { juegosDisponibles } from "./dataJuegos.js";
+import {
+  obtenerSaldo,
+  actualizarSaldo,
+  seleccionarJuego,
+  suscribirCambios
+} from "./state.js";
 
-  const adjustCounterValue = value => {
-    if (value >= 100) return value - 100;
-    if (value <= -100) return value + 100;
-    return value;
-  };
+document.addEventListener("DOMContentLoaded", () => {
+  const contenedorJuegos = document.getElementById("contenedor-juegos");
+  const textoSaldo = document.getElementById("texto-saldo");
+  const barraBusqueda = document.getElementById("barra");
 
-  const setCounter = value => {
-    counter = adjustCounterValue(value);
-    //TIP WebStorm has lots of inspections to help you catch issues in your project. It also has quick fixes to help you resolve them. Press <shortcut actionId="ShowIntentionActions"/> on <shortcut raw="text"/> and choose <b>Inline variable</b> to clean up the redundant code.
-    const text = `${counter}`;
-    element.innerHTML = text;
-  };
+  function mostrarDineroCLP(monto) {
+    return `$${monto.toLocaleString("es-CL")} CLP`;
+  }
 
-  document.getElementById('increaseByOne').addEventListener('click', () => setCounter(counter + 1));
-  document.getElementById('decreaseByOne').addEventListener('click', () => setCounter(counter - 1));
-  document.getElementById('increaseByTwo').addEventListener('click', () => setCounter(counter + 2));
-  //TIP In the app running in the browser, you’ll find that clicking <b>-2</b> doesn't work. To fix that, rewrite it using the code from lines 19 - 21 as examples of the logic.
-  document.getElementById('decreaseByTwo')
+  function mostrarSaldo(nuevoEstado) {
+    if (textoSaldo) {
+      textoSaldo.textContent = mostrarDineroCLP(nuevoEstado.saldo);
+    }
+  }
 
-  //TIP Let’s see how to review and commit your changes. Press <shortcut actionId="GotoAction"/> and look for <b>commit</b>. Try checking the diff for a file – double-click main.js to do that.
-  setCounter(0);
-}
+  suscribirCambios(mostrarSaldo);
+  mostrarSaldo({ saldo: obtenerSaldo() });
 
-//TIP To find text strings in your project, you can use the <shortcut actionId="FindInPath"/> shortcut. Press it and type in <b>counter</b> – you’ll get all matches in one place.
-setupCounter(document.getElementById('counter-value'));
+  function mostrarCatalogo(listaJuegos) {
+    if (!contenedorJuegos) return;
 
-//TIP There's much more in WebStorm to help you be more productive. Press <shortcut actionId="Shift"/> <shortcut actionId="Shift"/> and search for <b>Learn WebStorm</b> to open our learning hub with more things for you to try.
+    contenedorJuegos.innerHTML = "";
+
+    if (listaJuegos.length === 0) {
+      contenedorJuegos.innerHTML = `
+                <p style="grid-column: 1 / -1; text-align: center; color: #A0B0B9;">
+                    No se encontraron juegos que coincidan con la búsqueda.
+                </p>
+            `;
+      return;
+    }
+
+    listaJuegos.forEach((juego) => {
+      const card = document.createElement("button");
+      card.className = "botton-interactivo";
+      card.type = "button";
+
+      card.innerHTML = `
+                <img src="${juego.imagen}" alt="${juego.nombre}">
+                <div class="info-juego">
+                    <h4>${juego.nombre}</h4>
+                    <p>Apuesta min: ${formatearDinero(juego.minBet)} | max: ${formatearDinero(juego.maxBet)}</p>
+                    <p>${juego.regla}</p>
+                </div>
+            `;
+
+      card.addEventListener("click", () => {
+        seleccionarJuego(juego);
+        console.log("Juego seleccionado para el Integrante 1:", juego);
+
+        const eventoJuego = new CustomEvent("juegoSeleccionado", { detail: juego });
+        window.dispatchEvent(eventoJuego);
+      });
+
+      contenedorJuegos.appendChild(card);
+    });
+  }
+
+  mostrarCatalogo(juegosDisponibles);
+
+  if (barraBusqueda) {
+    barraBusqueda.addEventListener("input", (e) => {
+      const texto = e.target.value.toLowerCase().trim();
+
+      const juegosFiltrados = juegosDisponibles.filter((juego) => {
+        const coincideNombre = juego.nombre.toLowerCase().includes(texto);
+        const coincideRegla = juego.regla.toLowerCase().includes(texto);
+        return coincideNombre || coincideRegla;
+      });
+
+      mostrarCatalogo(juegosFiltrados);
+    });
+  }
+
+  window.actualizarSaldoCasino = actualizarSaldo;
+});

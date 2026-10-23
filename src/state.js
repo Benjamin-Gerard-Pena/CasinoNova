@@ -3,14 +3,14 @@ const estado = {
     juegoSeleccionado: null
 };
 
-const suscriptores = [];
+const jugador = [];
 
 export function suscribirCambios(callback) {
-    suscriptores.push(callback);
+    jugador.push(callback);
 }
 
 function notificarCambios() {
-    suscriptores.forEach((callback) => callback(estado));
+    jugador.forEach((callback) => callback(estado));
 }
 
 export function obtenerSaldo() {
