@@ -35,18 +35,16 @@
         >
 
         <nav class="contenedor_superior">
-            <button> Ranking </button>
-            <button> Amigos </button>
-            <button> Historial </button>
-            <button> Billetera </button>
-            <button> Préstamos </button>
-
+            <a href="#juegos" class="nav-boton">Juegos</a>
+            <a href="inicio_sesion.html" class="nav-boton">Billetera</a>
+            <a href="inicio_sesion.html" class="nav-boton">Historial</a>
         </nav>
     </div>
 
     <div class="contenedor-perfil">
         <div class="bloque-saldo">
-            <span class="saldo" >$1.000.000 - <span style="color: slateblue"> CLP($)</span></span>
+            <span class="moneda">Saldo disponible:</span>
+            <span class="saldo" id="texto-saldo">Cargando saldo...</span>
         </div>
 
 
@@ -66,52 +64,13 @@
     <div class="juegos" id="juegos">
         <h3> Juegos: </h3>
     </div>
-    <section class="botones">
-        <button
-                class="botton-interactivo">
-            <img src="images/ruleta.jpg" alt="ruleta">
-            <div
-                    class="info-juego">
-                <h4>Ruleta</h4>
-                <p>Apuesta min: 1.000 CLP($) | Apuesta max: 500.000 CLP($)</p>
-                <p>Regla: Elige un numero o color.</p>
-            </div>
-        </button>
-        <button
-                class="botton-interactivo">
-            <img src="images/Blackjack.jpg" alt="blackjack">
-            <div
-                    class="info-juego">
-                <h4>Blackjack</h4>
-                <p>Apuesta min: 1.000 CLP($) | Apuesta max: 750.000 CLP($)</p>
-                <p>Juego de cartas | Regla: El número más cercano a 21 sin pasarse.</p>
-            </div>
-        </button>
-        <button
-                class="botton-interactivo">
-            <img src="images/slots.jpg" alt="slots">
-            <div
-                    class="info-juego">
-                <h4>Slots</h4>
-                <p>Apuesta min: 5.000 CLP($)| Apuesta max: 300.000CLP($)</p>
-                <p>Regla:Combina simbolos para ganar.</p>
-            </div>
-        </button>
-        <button
-                class="botton-interactivo">
-            <img src="images/aviator.webp" alt="aviator">
-            <div
-                    class="info-juego">
-                <h4>Aviator</h4>
-                <p>Apuesta min: 2.500 CLP($)| Apuesta max: 600.000 CLP($)</p>
-                <p>Regla: Deten el vuelo antes de que choque para ganar.</p>
-            </div>
-        </button>
-    </section>
+    <section class="botones" id="contenedor-juegos"></section>
 
 </main>
 <footer class="pie-pagina">
     <p>© 2026 Casino Nova - Todos los derechos reservados</p>
 </footer>
+
+<script type="module" src="src/main.js"></script>
 </body>
 </html>
