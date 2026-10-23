@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DINO MYSTAKE VIP - High Adrenaline Crash Casino</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        casinoBg: '#070a12',
+                        panelBg: '#0f1626',
+                        panelBorder: '#1e293b',
+                        neonGreen: '#00e701',
+                        neonGreenHover: '#00ff15',
+                        neonAmber: '#f59e0b',
+                        neonRed: '#ff1e42',
+                        neonPurple: '#a855f7',
+                        neonBlue: '#3b82f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #070a12;
+            color: #f8fafc;
+            overflow-x: hidden;
+            user-select: none;
+        }
+        .font-mono-num {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        ::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b101d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #28354e;
+            border-radius: 4px;
+        }
+        @keyframes pulse-fast {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .btn-pulse {
+            animation: pulse-fast 0.9s infinite ease-in-out;
+        }
+        .glow-green {
+            box-shadow: 0 0 25px rgba(0, 231, 1, 0.35);
+        }
+        .glow-amber {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+        }
+        .glow-red {
+            box-shadow: 0 0 25px rgba(255, 30, 66, 0.45);
+        }
+        .mult-shadow {
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.85);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-casinoBg text-slate-100">
+
+    <!-- TOP NAVBAR -->
+    <header class="bg-panelBg/90 backdrop-blur-md border-b border-panelBorder px-4 py-2.5 sticky top-0 z-40">
+        <div class="max-w-[1440px] mx-auto flex flex-wrap justify-between items-center gap-3">
+            <!-- Brand -->
+            <div class="flex items-center space-x-3">
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-neonGreen to-emerald-500 rounded-xl blur opacity-60 group-hover:opacity-100 transition"></div>
+                    <div class="relative bg-slate-950 p-2 rounded-xl flex items-center justify-center text-2xl">
+                        🦖
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-black text-xl tracking-tight text-white uppercase italic">DINO<span class="text-neonGreen">CRASH</span></h1>
+                        <span class="bg-neonRed/20 border border-neonRed/50 text-neonRed text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">LIVE</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Original Casino Crash &bull; RTP 96% (Alta Volatilidad)</p>
+                </div>
+            </div>
+
+            <!-- Stats & Sound & Balance -->
+            <div class="flex items-center space-x-3">
+                <!-- Toggle Dev Algorithm Monitor -->
+                <button id="devToggleBtn" onclick="toggleDevMonitor()" class="bg-slate-900 hover:bg-slate-800 border border-purple-500/50 px-3 py-2 rounded-xl text-xs font-bold text-purple-300 transition flex items-center gap-1.5 shadow-inner" title="Ver cómo funciona el algoritmo de probabilidades en vivo">
+                    <span>👁️</span>
+                    <span class="hidden sm:inline">Monitor Algoritmo</span>
+                </button>
+
+                <!-- Sound Toggle -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700/80 p-2.5 rounded-xl text-slate-300 transition" title="Sonido On/Off">
+                    🔊
+                </button>
+
+                <!-- Wallet Balance -->
+                <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center space-x-3 shadow-inner">
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Saldo Demo</div>
+                        <div id="balanceDisplay" class="font-mono-num font-extrabold text-neonGreen text-lg sm:text-xl tracking-tight">$150.000</div>
+                    </div>
+                    <button onclick="rechargeBalance()" title="Recargar Saldo Demo" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold px-2.5 py-1.5 rounded-lg transition flex items-center gap-1">
+                        <span>+ Recargar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- COLLAPSIBLE DEV MONITOR DRAWER (ALGORITHM TELEMETRY) -->
+    <div id="devMonitorBar" class="bg-slate-950/95 border-b border-purple-500/40 px-4 py-2.5 text-xs transition-all">
+        <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+                <span class="bg-purple-500/20 border border-purple-500/50 text-purple-300 font-black px-2 py-0.5 rounded uppercase tracking-wider text-[10px]">🧠 IA Adaptativa & Historial</span>
+                <span id="devTierBadge" class="font-mono-num font-extrabold px-2.5 py-0.5 rounded bg-slate-800 text-amber-400 border border-slate-700">Analizando jugador...</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-300 font-mono-num">
+                <div>Tramo: <strong id="devAiProfile" class="text-purple-400">ESPECTADOR</strong></div>
+                <div>Apuesta/Saldo: <strong id="devTotalBet" class="text-white">$0</strong> (<span id="devBetRatio" class="text-sky-400">0%</span>)</div>
+                <div>Historial (G/P): <strong id="devWinLossRecord" class="text-amber-400">0G / 0P (Racha: 0)</strong></div>
+                <div>Riesgo Abandono: <strong id="devChurnRisk" class="text-emerald-400">0%</strong></div>
+                <div>Ganancia Casa: <strong id="devHouseProfit" class="text-neonGreen">$0</strong></div>
+                <div>Prob. Bonus: <strong id="devBonusProb" class="text-emerald-400">--%</strong></div>
+                <div>Target Crash: <strong id="devCrashTarget" class="text-neonGreen font-black">--</strong></div>
+            </div>
+            <div id="devReasonText" class="text-[11px] text-slate-400 italic w-full lg:w-auto">
+                La IA registra cada victoria/derrota del usuario para aplicar refuerzo intermitente: engancha en rachas malas sin ceder la rentabilidad neta de la casa.
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT GRID -->
+    <main class="flex-grow max-w-[1440px] w-full mx-auto p-3 sm:p-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+        
+        <!-- LEFT/CENTER COLUMN: GAME SCREEN + DUAL BETTING (9 cols on LG) -->
+        <div class="lg:col-span-9 flex flex-col gap-3.5 w-full">
+            
+            <!-- RECENT MULTIPLIERS RIBBON -->
+            <div class="bg-panelBg border border-panelBorder rounded-xl px-3.5 py-2 flex items-center gap-2.5 shadow-md overflow-hidden">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">
+                    <span class="w-2 h-2 rounded-full bg-neonGreen"></span>
+                    <span>Historial:</span>
+                </div>
+                <div id="historyRibbon" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 flex-grow">
+                    <!-- Dynamic Pills -->
+                </div>
+            </div>
+
+            <!-- MAIN CANVAS CONTAINER -->
+            <div class="relative bg-slate-950 border-2 border-slate-800/90 rounded-2xl overflow-hidden shadow-2xl h-[350px] sm:h-[445px] w-full">
+                
+                <!-- Top Info HUD inside Canvas -->
+                <div class="absolute top-3 left-3 right-3 flex justify-between items-start z-20 pointer-events-none">
+                    <div class="flex flex-col gap-1.5">
+                        <div class="bg-slate-950/80 backdrop-blur-md border border-slate-800 px-3 py-1 rounded-lg text-[11px] text-slate-300 flex flex-wrap items-center gap-2">
+                            <span id="skyPhaseBadge" class="text-amber-400 font-bold">🌋 Valle Prehistórico</span>
+                            <span class="text-slate-600">|</span>
+                            <span id="paceIndicatorBadge" class="text-rose-400 font-mono-num font-bold">Zona Casa (0x-1x): Agonía Lenta</span>
+                            <span class="text-slate-600">|</span>
+                            <span id="bonusAccumulatorBadge" class="text-neonGreen font-mono-num font-bold">Bonus Items: +0.00x</span>
+                        </div>
+                        <!-- Seismic Asteroid Danger Alert Banner -->
+                        <div id="seismicAlertBanner" class="hidden bg-red-950/90 border border-neonRed px-3 py-1 rounded-lg text-[11px] font-black text-neonRed uppercase tracking-wider animate-pulse shadow-lg glow-red">
+                            ⚠️ ALERTA SÍSMICA: ASTEROIDE EN TRAYECTORIA
+                        </div>
+                    </div>
+                    <!-- FOMO Potential Win / Taunt Box -->
+                    <div id="fomoTauntBox" class="hidden bg-amber-500/20 backdrop-blur-md border border-amber-400/50 px-3.5 py-1.5 rounded-xl text-right transition-all">
+                        <div class="text-[10px] text-amber-300 uppercase font-extrabold tracking-wider">¡Sigue subiendo sin ti! 😱</div>
+                        <div id="fomoTauntAmount" class="font-mono-num text-xs sm:text-sm font-black text-white">Pudiste ganar: $0</div>
+                    </div>
+                </div>
+
+                <!-- Center Multiplier & Countdown HUD -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4">
+                    
+                    <!-- Main Multiplier Readout -->
+                    <div id="multiplierReadout" class="font-mono-num text-6xl sm:text-8xl font-black text-white tracking-tighter mult-shadow transition-transform duration-75">
+                        0.00x
+                    </div>
+
+                    <!-- Sub-readout showing Base Curve + Bonus Fruits/Meteors -->
+                    <div id="multiplierBreakdown" class="mt-0.5 font-mono-num text-[11px] sm:text-xs font-bold text-slate-400 bg-slate-950/70 px-3 py-0.5 rounded-full border border-slate-800">
+                        Base: 0.00x + Bonus: 0.00x
+                    </div>
+
+                    <!-- Game Status Badge -->
+                    <div id="roundStateBanner" class="mt-2 px-4 py-1 rounded-full bg-slate-900/85 border border-slate-700 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-emerald-400 shadow-lg">
+                        CORRIENDO...
+                    </div>
+
+                    <!-- Countdown Progress Bar (Shown only during WAITING phase) -->
+                    <div id="countdownWrapper" class="hidden w-64 sm:w-80 mt-4 bg-slate-900/90 p-3 rounded-2xl border border-slate-700/80 shadow-2xl">
+                        <div class="flex justify-between text-xs font-bold text-slate-300 mb-1.5">
+                            <span>PRÓXIMA RONDA EN</span>
+                            <span id="countdownTimerText" class="font-mono-num text-neonGreen">5.0s</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="countdownBar" class="h-full bg-gradient-to-r from-neonGreen to-emerald-400 rounded-full transition-all duration-75" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Interactive Prehistoric World Canvas -->
+                <canvas id="dinoCanvas" class="w-full h-full block"></canvas>
+            </div>
+
+            <!-- DUAL BETTING PANELS (BET 1 & BET 2) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                
+                <!-- PANEL 1 -->
+                <div id="betPanel1" class="bg-panelBg border-2 border-panelBorder rounded-2xl p-4 flex flex-col justify-between shadow-lg transition-colors">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2.5 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-emerald-500/20 text-neonGreen border border-emerald-500/30 text-xs font-black px-2 py-0.5 rounded-md">APUESTA 1</span>
+                            <span id="panel1StatusBadge" class="text-xs text-slate-400 font-semibold">Lista</span>
+                        </div>
+                        <!-- Auto Cashout Switch 1 -->
+                        <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300 font-semibold">
+                            <span>Auto Retiro</span>
+                            <input type="checkbox" id="autoCheck1" checked class="accent-neonGreen w-4 h-4 rounded cursor-pointer">
+                            <div class="relative w-20">
+                                <input type="number" id="autoMult1" value="1.80" min="1.05" step="0.10" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 font-mono-num text-xs text-white font-bold focus:outline-none focus:border-neonGreen">
+                                <span class="absolute right-2 top-1 text-slate-400 text-xs font-bold">x</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <!-- Bet Input + Quick Buttons -->
+                        <div class="sm:col-span-7 space-y-2">
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 font-bold text-sm">$</span>
+                                <input type="number" id="betAmount1" value="3000" min="500" step="500" 
+                                    class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-7 pr-16 py-2.5 font-mono-num font-extrabold text-white text-base focus:outline-none focus:border-neonGreen">
+                                <button onclick="modifyBet(1, 'MAX')" class="absolute inset-y-1.5 right-1.5 px-2.5 bg-slate-800 hover:bg-slate-700 text-[10px] font-black text-amber-400 rounded-lg border border-slate-600 transition">
+                                    MAX
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-4 gap-1.5">
+                                <button onclick="modifyBet(1, 2000)" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">+2K</button>
+                                <button onclick="modifyBet(1, 10000)" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">+10K</button>
+                                <button onclick="modifyBet(1, 'DOUBLE')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">2X</button>
+                                <button onclick="modifyBet(1, 'HALF')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">1/2</button>
+                            </div>
+                        </div>
+
+                        <!-- Main Action Button 1 -->
+                        <div class="sm:col-span-5 h-full">
+                            <button id="betBtn1" onclick="handleBetClick(1)" 
+                                class="w-full h-full min-h-[76px] rounded-xl font-black text-base uppercase tracking-wider transition transform active:scale-95 flex flex-col items-center justify-center px-3 shadow-lg bg-neonGreen hover:bg-neonGreenHover text-slate-950 glow-green">
+                                <span id="betBtn1Title">APOSTAR</span>
+                                <span id="betBtn1Sub" class="font-mono-num text-xs font-extrabold opacity-85 mt-0.5">$3.000</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2 -->
+                <div id="betPanel2" class="bg-panelBg border-2 border-panelBorder rounded-2xl p-4 flex flex-col justify-between shadow-lg transition-colors">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2.5 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs font-black px-2 py-0.5 rounded-md">APUESTA 2</span>
+                            <span id="panel2StatusBadge" class="text-xs text-slate-400 font-semibold">Lista</span>
+                        </div>
+                        <!-- Auto Cashout Switch 2 -->
+                        <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300 font-semibold">
+                            <span>Auto Retiro</span>
+                            <input type="checkbox" id="autoCheck2" class="accent-neonGreen w-4 h-4 rounded cursor-pointer">
+                            <div class="relative w-20">
+                                <input type="number" id="autoMult2" value="5.00" min="1.05" step="0.50" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 font-mono-num text-xs text-white font-bold focus:outline-none focus:border-neonGreen">
+                                <span class="absolute right-2 top-1 text-slate-400 text-xs font-bold">x</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <!-- Bet Input + Quick Buttons -->
+                        <div class="sm:col-span-7 space-y-2">
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 font-bold text-sm">$</span>
+                                <input type="number" id="betAmount2" value="10000" min="500" step="500" 
+                                    class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-7 pr-16 py-2.5 font-mono-num font-extrabold text-white text-base focus:outline-none focus:border-neonGreen">
+                                <button onclick="modifyBet(2, 'MAX')" class="absolute inset-y-1.5 right-1.5 px-2.5 bg-slate-800 hover:bg-slate-700 text-[10px] font-black text-amber-400 rounded-lg border border-slate-600 transition">
+                                    MAX
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-4 gap-1.5">
+                                <button onclick="modifyBet(2, 5000)" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">+5K</button>
+                                <button onclick="modifyBet(2, 25000)" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">+25K</button>
+                                <button onclick="modifyBet(2, 'DOUBLE')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">2X</button>
+                                <button onclick="modifyBet(2, 'HALF')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-1.5 rounded-lg border border-slate-800 transition">1/2</button>
+                            </div>
+                        </div>
+
+                        <!-- Main Action Button 2 -->
+                        <div class="sm:col-span-5 h-full">
+                            <button id="betBtn2" onclick="handleBetClick(2)" 
+                                class="w-full h-full min-h-[76px] rounded-xl font-black text-base uppercase tracking-wider transition transform active:scale-95 flex flex-col items-center justify-center px-3 shadow-lg bg-neonGreen hover:bg-neonGreenHover text-slate-950 glow-green">
+                                <span id="betBtn2Title">APOSTAR</span>
+                                <span id="betBtn2Sub" class="font-mono-num text-xs font-extrabold opacity-85 mt-0.5">$10.000</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: ADVANCED RNG TELEMETRY & USER HISTORY INSPECTOR (3 cols on LG) -->
+        <aside class="lg:col-span-3 bg-panelBg border border-panelBorder rounded-2xl p-4 flex flex-col justify-between h-auto lg:h-[660px] shadow-xl">
+            <div class="space-y-3 overflow-y-auto pr-1">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping"></span>
+                        <h2 class="text-xs font-black uppercase tracking-wider text-white">IA Retención & Historial</h2>
+                    </div>
+                    <span id="rngEntropyTag" class="font-mono-num text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded">Adaptativo v5</span>
+                </div>
+
+                <!-- AI Player Behavioral & Session Memory Card -->
+                <div class="bg-slate-950/90 border border-purple-500/30 rounded-xl p-3 space-y-2 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold uppercase text-purple-300 tracking-wider">🧠 Memoria del Jugador</span>
+                        <span id="aiConfidenceBadge" class="text-[10px] font-mono-num font-bold text-neonGreen">En Vivo</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 font-mono-num text-[11px] pt-1">
+                        <div class="bg-slate-900/90 p-1.5 rounded border border-slate-800">
+                            <div class="text-[9px] text-slate-400 uppercase">Tramo Actual</div>
+                            <div id="aiStateLabel" class="font-bold text-amber-400 truncate">Observando</div>
+                        </div>
+                        <div class="bg-slate-900/90 p-1.5 rounded border border-slate-800">
+                            <div class="text-[9px] text-slate-400 uppercase">Riesgo Abandono</div>
+                            <div id="aiTiltScore" class="font-bold text-sky-400">Bajo (10%)</div>
+                        </div>
+                    </div>
+                    <!-- User Recent Outcomes Ribbon (Memory) -->
+                    <div class="pt-1">
+                        <div class="flex justify-between text-[9px] text-slate-400 uppercase font-bold mb-1">
+                            <span>Últimas Rondas Jugadas</span>
+                            <span id="userWinRateLabel" class="text-slate-300 font-mono-num">Winrate: 0%</span>
+                        </div>
+                        <div id="userMemoryRibbon" class="flex items-center gap-1 overflow-x-auto py-0.5 min-h-[22px]">
+                            <span class="text-[10px] text-slate-600 italic">Sin rondas apostadas aún...</span>
+                        </div>
+                    </div>
+                    <p id="aiPlanDescription" class="text-[11px] text-slate-300 leading-snug italic pt-0.5">
+                        Tramos: &lt;$5k Tanteo | $5k-$20k Juega | $20k-$45k Serio | &gt;$45k Ballena.
+                    </p>
+                </div>
+
+                <!-- Real-Time RNG State Box -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
+                    <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Distribución Dinámica de Choque</div>
+                    <div class="space-y-1.5 font-mono-num text-[11px]">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Zona Casa (0.00x - 0.99x):</span>
+                            <strong id="rngProbDeadZone" class="text-neonRed">68%</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Zona Media (1.00x - 1.85x):</span>
+                            <strong id="rngProbMidZone" class="text-amber-400">24%</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Zona Alta (1.86x+):</span>
+                            <strong id="rngProbHighZone" class="text-neonGreen">8%</strong>
+                        </div>
+                    </div>
+                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden flex">
+                        <div id="barDeadZone" class="h-full bg-neonRed transition-all" style="width: 68%"></div>
+                        <div id="barMidZone" class="h-full bg-amber-400 transition-all" style="width: 24%"></div>
+                        <div id="barHighZone" class="h-full bg-neonGreen transition-all" style="width: 8%"></div>
+                    </div>
+                </div>
+
+                <!-- Collectible Bonus Items Legend & Current Tier Spawn Rate -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3 space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Frutas & Meteoritos Bonus</span>
+                        <span id="tierSpawnModeBadge" class="text-[10px] font-mono-num font-bold text-emerald-400">Controlado</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-1 pt-1 text-[10px] font-mono-num">
+                        <div class="flex justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-800">
+                            <span>🍒 Baya</span><span class="text-neonGreen font-bold">+0.01x</span>
+                        </div>
+                        <div class="flex justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-800">
+                            <span>🥭 Ámbar</span><span class="text-neonGreen font-bold">+0.03x</span>
+                        </div>
+                        <div class="flex justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-800">
+                            <span>🍍 Piña</span><span class="text-amber-400 font-bold">+0.05x</span>
+                        </div>
+                        <div class="flex justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-800">
+                            <span>☄️ Kriptón</span><span class="text-purple-400 font-bold">+0.10x</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Round RNG & Bonus Log -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3">
+                    <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-1.5">Bitácora de Decisiones IA</div>
+                    <div id="rngLiveLog" class="space-y-1.5 max-h-[135px] overflow-y-auto font-mono-num text-[11px] text-slate-300 pr-1">
+                        <div class="text-slate-500">Esperando inicio de ronda...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Psychological Provably Fair Footer -->
+            <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between mt-2">
+                <span>🛡️ Control de Retención IA</span>
+                <span id="streakIndicator" class="text-neonRed font-bold">🔥 Dominio Banca 91%+</span>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- FLOATING WIN / CASHOUT TOAST NOTIFICATION -->
+    <div id="winToast" class="fixed bottom-6 right-6 z-50 transform translate-y-28 opacity-0 transition-all duration-300 pointer-events-none bg-slate-950/95 border-2 border-neonGreen px-5 py-4 rounded-2xl shadow-2xl glow-green flex items-center gap-3.5">
+        <div class="text-3xl">🤑</div>
+        <div>
+            <div id="winToastTitle" class="text-xs font-black uppercase tracking-wider text-neonGreen">¡RETIRO EXITOSO!</div>
+            <div id="winToastAmount" class="font-mono-num text-xl font-black text-white">+$15.000</div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================================
+           1. WEB AUDIO SYNTHESIZER ENGINE (NO EXTERNAL ASSETS)
+           ============================================================================ */
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function ensureAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        /* ============================================================================
+           2. GAME STATE, DUAL BETS & AI BEHAVIORAL PROFILER ENGINE
+           ============================================================================ */
+        const state = {
+            initialDeposit: 150000,
+            balance: 150000,
+            houseNetProfit: 0, // Tracks exactly how much the house has won from the player
+            phase: 'WAITING', // 'WAITING' (5.5s countdown), 'RUNNING', 'CRASHED'
+            baseMultiplier: 0.00,
+            bonusMultiplier: 0.00,
+            multiplier: 0.00,
+            crashPoint: 0.00,
+            startTime: 0,
+            waitStartTime: 0,
+            waitDuration: 5500,
+            lastStepSoundTime: 0,
+            lastRiserSoundTime: 0,
+            lastHeartbeatTime: 0,
+            lastDangerWaveTime: 0,
+            lastBonusSpawnCheckTime: 0,
+            roundCount: 0,
+            currentSeed: 0,
+            currentTierIndex: 0,
+            bonusSpawnProbability: 0.25,
+            fakeoutBonusProbability: 0.35,
+            playerCashedOutEarlyMult: null,
+            playerSkippedRound: false,
+            devMonitorVisible: true,
+            currentTierLabel: 'ESPERANDO',
+            history: [0.34, 0.89, 1.42, 0.12, 0.95, 2.15, 0.48, 0.04, 1.18, 0.76, 0.91, 0.29],
+
+            // Behavioral AI & Persistent User Session History
+            aiMetrics: {
+                lastBetTimestamp: performance.now(),
+                unbetRoundsCount: 0,
+                consecutiveWins: 0,
+                consecutiveLosses: 0,
+                totalWins: 0,
+                totalLosses: 0,
+                whaleLossesStreak: 0,
+                nextMercyThreshold: 3, // Randomized between 2 and 4 losses so it's NEVER predictable
+                lastBetTotal: 0,
+                avgBetTotal: 0,
+                betCount: 0,
+                profileName: 'OBSERVADOR',
+                churnRisk: 10, // Probability that the player rage-quits if they lose again
+                userRoundHistory: [] // Stores { round, bet, won, net, mult, tier }
+            },
+
+            // Dual Bet Slots (Slot 1 & Slot 2)
+            bets: {
+                1: { active: false, queued: false, cashedOut: false, amount: 3000, cashoutMult: 0 },
+                2: { active: false, queued: false, cashedOut: false, amount: 10000, cashoutMult: 0 }
+            },
+
+            // Visual & Collision Entities
+            cameraShake: 0,
+            screenFlash: 0,
+            dangerShadowAlpha: 0,
+            FatalMeteor: null,
+            nearMisses: [],
+            bonusItems: [],
+            particles: [],
+            floatingTexts: []
+        };
+
+        /* ============================================================================
+           CUSTOM CRYPTO-STYLE SEEDED PRNG (MULBERRY32 + BOX-MULLER / BETA SAMPLING)
+           ============================================================================ */
+        let prngState = 1337420;
+
+        function reseedPRNG(betTotal, roundNum) {
+            const timeEntropy = Math.floor(performance.now() * 1000) ^ (Date.now() & 0xffffffff);
+            const betEntropy = (betTotal * 2654435761) & 0xffffffff;
+            prngState = (timeEntropy ^ betEntropy ^ (roundNum * 374761393)) >>> 0;
+            if (prngState === 0) prngState = 987654321;
+            state.currentSeed = prngState;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggleBtn').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function playSfx(type, param = 1) {
+            if (!soundEnabled) return;
+            try {
+                ensureAudio();
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(950, now + 0.04);
+                    g.gain.setValueAtTime(0.08, now);
+                    g.gain.linearRampToValueAtTime(0.001, now + 0.04);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.04);
+                } 
+                else if (type === 'step') {
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(95, now);
+                    osc.frequency.exponentialRampToValueAtTime(38, now + 0.05);
+                    g.gain.setValueAtTime(0.05, now);
+                    g.gain.linearRampToValueAtTime(0.001, now + 0.05);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.05);
+                }
+                else if (type === 'heartbeat') {
+                    // Deep double thump heartbeat that speeds up with multiplier suspense
+                    [0, 0.14].forEach((offset, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(i === 0 ? 68 : 55, now + offset);
+                        osc.frequency.exponentialRampToValueAtTime(28, now + offset + 0.11);
+                        g.gain.setValueAtTime(i === 0 ? 0.14 : 0.09, now + offset);
+                        g.gain.linearRampToValueAtTime(0.001, now + offset + 0.11);
+                        osc.connect(g); g.connect(audioCtx.destination);
+                        osc.start(now + offset); osc.stop(now + offset + 0.11);
+                    });
+                }
+                else if (type === 'siren') {
+                    // Seismic warning beep when danger zone triggers
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.linearRampToValueAtTime(620, now + 0.15);
+                    g.gain.setValueAtTime(0.06, now);
+                    g.gain.linearRampToValueAtTime(0.001, now + 0.16);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.16);
+                }
+                else if (type === 'riser') {
+                    // Subtle rising pitch pulse as multiplier climbs
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sine';
+                    const pitch = Math.min(1400, 200 + param * 55);
+                    osc.frequency.setValueAtTime(pitch, now);
+                    g.gain.setValueAtTime(0.025, now);
+                    g.gain.linearRampToValueAtTime(0.001, now + 0.07);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.07);
+                }
+                else if (type === 'nearmiss') {
+                    // Whoosh + minor blast
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(90, now + 0.22);
+                    g.gain.setValueAtTime(0.12, now);
+                    g.gain.linearRampToValueAtTime(0.001, now + 0.22);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.22);
+                }
+                else if (type === 'bonus') {
+                    // Bright arcade powerup chime when collecting a fruit or green meteor crystal
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(1280, now + 0.14);
+                    g.gain.setValueAtTime(0.14, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.15);
+                }
+                else if (type === 'cashout') {
+                    // Cha-ching dual coin arpeggio
+                    const notes = [587.33, 880, 1174.66, 1760];
+                    notes.forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+                        g.gain.setValueAtTime(0.14, now + idx * 0.055);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.055 + 0.25);
+                        osc.connect(g); g.connect(audioCtx.destination);
+                        osc.start(now + idx * 0.055);
+                        osc.stop(now + idx * 0.055 + 0.25);
+                    });
+                }
+                else if (type === 'crash') {
+                    // Heavy asteroid explosion (low saw + noise burst)
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.exponentialRampToValueAtTime(28, now + 0.65);
+                    g.gain.setValueAtTime(0.32, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+                    osc.connect(g); g.connect(audioCtx.destination);
+                    osc.start(now); osc.stop(now + 0.65);
+
+                    // White noise buffer for explosion crunch
+                    const bufferSize = audioCtx.sampleRate * 0.5;
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+                    const noise = audioCtx.createBufferSource();
+                    noise.buffer = buffer;
+                    const ng = audioCtx.createGain();
+                    ng.gain.setValueAtTime(0.25, now);
+                    ng.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    noise.connect(ng); ng.connect(audioCtx.destination);
+                    noise.start(now);
+                }
+            } catch (e) {}
+        }
+
+        // Returns uniform float in [0, 1)
+        function nextRNG() {
+            let t = (prngState += 0x6D2B79F5);
+            t = Math.imul(t ^ (t >>> 15), t | 1);
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        }
+
+        // Non-linear Skewed Power/Weibull Sampler within a specific section [min, max]
+        // skew > 1 pushes outcomes toward 'min' (closer to 0.00x); skew < 1 pushes toward 'max' (closer to 0.99x cruel near-break-even!)
+        function sampleSectionRNG(min, max, skew = 1.0) {
+            const u = Math.max(0.0001, nextRNG());
+            const shaped = Math.pow(u, skew);
+            return min + shaped * (max - min);
+        }
+
+        function appendRngLog(msg, colorClass = 'text-slate-300') {
+            const logEl = document.getElementById('rngLiveLog');
+            if (!logEl) return;
+            const entry = document.createElement('div');
+            entry.className = `${colorClass} leading-tight border-l-2 border-slate-700 pl-2 py-0.5`;
+            entry.textContent = msg;
+            logEl.prepend(entry);
+            while (logEl.children.length > 18) {
+                logEl.removeChild(logEl.lastChild);
+            }
+        }
+
+        function formatCLP(num) {
+            return '$' + Math.round(num).toLocaleString('es-CL');
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('balanceDisplay').textContent = formatCLP(state.balance);
+        }
+
+        function toggleDevMonitor() {
+            playSfx('click');
+            state.devMonitorVisible = !state.devMonitorVisible;
+            const bar = document.getElementById('devMonitorBar');
+            bar.classList.toggle('hidden', !state.devMonitorVisible);
+        }
+
+        function rechargeBalance() {
+            playSfx('click');
+            state.balance += 50000;
+            state.initialDeposit += 50000;
+            updateBalanceDisplay();
+            showWinToast('RECARGA DEMO', '+$50.000');
+        }
+
+        function updateHouseProfitDisplay() {
+            state.houseNetProfit = state.initialDeposit - state.balance;
+            const el = document.getElementById('devHouseProfit');
+            if (!el) return;
+            const sign = state.houseNetProfit >= 0 ? '+' : '-';
+            el.textContent = `${sign}${formatCLP(Math.abs(state.houseNetProfit))}`;
+            el.className = state.houseNetProfit >= 0 ? 'text-neonGreen font-black' : 'text-neonRed font-black';
+        }
+
+        function renderUserMemoryRibbon() {
+            const ai = state.aiMetrics;
+            const container = document.getElementById('userMemoryRibbon');
+            const winRateEl = document.getElementById('userWinRateLabel');
+            const recordEl = document.getElementById('devWinLossRecord');
+            const churnEl = document.getElementById('devChurnRisk');
+
+            const totalPlayed = ai.totalWins + ai.totalLosses;
+            const winRate = totalPlayed > 0 ? Math.round((ai.totalWins / totalPlayed) * 100) : 0;
+            if (winRateEl) winRateEl.textContent = `Winrate: ${winRate}% (${ai.totalWins}G/${ai.totalLosses}P)`;
+            if (recordEl) {
+                const streakStr = ai.consecutiveLosses > 0 ? `-${ai.consecutiveLosses}P` : `+${ai.consecutiveWins}G`;
+                recordEl.textContent = `${ai.totalWins}G / ${ai.totalLosses}P (Racha: ${streakStr})`;
+            }
+            if (churnEl) {
+                churnEl.textContent = `${ai.churnRisk}%`;
+                churnEl.className = ai.churnRisk >= 70 ? 'text-neonRed font-black animate-pulse' : (ai.churnRisk >= 40 ? 'text-amber-400 font-bold' : 'text-emerald-400');
+            }
+
+            if (!container || ai.userRoundHistory.length === 0) return;
+            container.innerHTML = '';
+            ai.userRoundHistory.slice(0, 10).forEach(item => {
+                const badge = document.createElement('span');
+                badge.className = item.won
+                    ? 'px-1.5 py-0.5 text-[9px] font-mono-num font-extrabold rounded bg-emerald-500/20 text-neonGreen border border-emerald-500/40 shrink-0'
+                    : 'px-1.5 py-0.5 text-[9px] font-mono-num font-extrabold rounded bg-red-500/20 text-neonRed border border-red-500/40 shrink-0';
+                badge.title = `Apuesta: ${formatCLP(item.bet)} | Crash: ${item.mult.toFixed(2)}x`;
+                badge.textContent = item.won ? `G (${item.mult.toFixed(1)}x)` : `P (${item.mult.toFixed(2)}x)`;
+                container.appendChild(badge);
+            });
+        }
+
+        function updateSidebarDistributionUI(deadPct, midPct, highPct, spawnModeText, spawnModeColor) {
+            document.getElementById('rngProbDeadZone').textContent = `${deadPct}%`;
+            document.getElementById('rngProbMidZone').textContent = `${midPct}%`;
+            document.getElementById('rngProbHighZone').textContent = `${highPct}%`;
+            document.getElementById('barDeadZone').style.width = `${deadPct}%`;
+            document.getElementById('barMidZone').style.width = `${midPct}%`;
+            document.getElementById('barHighZone').style.width = `${highPct}%`;
+            const badge = document.getElementById('tierSpawnModeBadge');
+            badge.textContent = spawnModeText;
+            badge.className = `text-[10px] font-mono-num font-bold ${spawnModeColor}`;
+        }
+
+        /* ============================================================================
+           ADAPTIVE AI PROFILER WITH CLP BRACKETS & ANTI-CHURN RETENTION MEMORY
+           ============================================================================
+           Tramos definidos:
+           - Tramo 0: Sin apuesta ($0) -> Espectador / Cebo FOMO
+           - Tramo 1 (Tanteo): < $5.000 CLP
+           - Tramo 2 (Juega): $5.000 a $20.000 CLP
+           - Tramo 3 (Se lo toma en serio): $20.001 a $45.000 CLP
+           - Tramo 4 (Ballenas Grandes): > $45.000 CLP
+           ============================================================================ */
+        function classifyBetBracket(totalBet) {
+            if (totalBet === 0) return { id: 0, label: 'ESPECTADOR ($0)' };
+            if (totalBet < 5000) return { id: 1, label: 'TANTEO (< $5K)' };
+            if (totalBet <= 20000) return { id: 2, label: 'JUEGA ($5K - $20K)' };
+            if (totalBet <= 45000) return { id: 3, label: 'EN SERIO ($20K - $45K)' };
+            return { id: 4, label: 'BALLENA GRANDE (> $45K)' };
+        }
+
+        function calculateNextCrashPoint() {
+            state.roundCount++;
+
+            // 1. Gather Player Bet & Bankroll Context
+            const bet1 = state.bets[1].active ? state.bets[1].amount : 0;
+            const bet2 = state.bets[2].active ? state.bets[2].amount : 0;
+            const totalBet = bet1 + bet2;
+            const bankrollBeforeBet = Math.max(500, state.balance + totalBet);
+            const betRatio = totalBet / bankrollBeforeBet;
+            const bracket = classifyBetBracket(totalBet);
+
+            // 2. Update Behavioral AI Tracking & Churn Risk (Riesgo de Abandono)
+            const now = performance.now();
+            const ai = state.aiMetrics;
+            if (totalBet === 0) {
+                ai.unbetRoundsCount++;
+            } else {
+                ai.betCount++;
+                ai.avgBetTotal = ai.betCount === 1 ? totalBet : (ai.avgBetTotal * 0.7 + totalBet * 0.3);
+            }
+            const idleSec = Math.round((now - ai.lastBetTimestamp) / 1000);
+
+            // Calculate how much profit the House currently holds over the player
+            state.houseNetProfit = state.initialDeposit - bankrollBeforeBet;
+            const isPlayerWinningOverall = (bankrollBeforeBet > state.initialDeposit);
+
+            // Compute Dynamic Churn Risk (0% to 98%): rises with consecutive losses, especially for Serious & Whale players
+            ai.churnRisk = Math.min(
+                98,
+                Math.max(5, ai.consecutiveLosses * 24 + (bracket.id >= 3 ? 18 : 0) + (state.houseNetProfit > 35000 ? 15 : 0) - ai.consecutiveWins * 20)
+            );
+
+            // Reseed PRNG with current round entropy + bet size + user history length
+            reseedPRNG(totalBet + ai.userRoundHistory.length * 997, state.roundCount);
+            const rSection = nextRNG();
+            const rMercyCheck = nextRNG();
+
+            let crash = 0.00;
+            let tierName = '';
+            let tierBadgeStyle = '';
+            let reason = '';
+            let aiProfileTag = bracket.label;
+            let aiPlanDesc = '';
+
+            // Check if the House can afford a "Mercy / Dopamine Hook" without losing its net edge!
+            // Rule: Even if giving a 1.35x - 1.75x win, the House still keeps a net profit OR prevents a big whale from quitting early.
+            const maxSafeMercyMult = state.houseNetProfit > totalBet * 0.45
+                ? Math.min(2.15, 1.18 + (state.houseNetProfit / Math.max(1, totalBet)) * 0.45)
+                : 1.38;
+
+            const shouldTriggerMercyHook =
+                totalBet > 0 &&
+                !isPlayerWinningOverall &&
+                ai.consecutiveLosses >= ai.nextMercyThreshold &&
+                rMercyCheck < 0.78; // 78% chance once threshold is reached (unpredictable, never a fixed pattern!)
+
+            // =========================================================================
+            // TRAMO 0: ESPECTADOR SIN APUESTA ($0) -> CEBO FOMO ADAPTATIVO
+            // =========================================================================
+            if (bracket.id === 0) {
+                state.currentTierIndex = 0;
+                const deepFomo = ai.unbetRoundsCount >= 2 || idleSec >= 16 || ai.consecutiveLosses >= 2;
+                aiProfileTag = deepFomo ? 'CEBO FOMO (POST-DERROTA / MIRÓN)' : 'ESPECTADOR RECIENTE';
+
+                if (deepFomo) {
+                    state.bonusSpawnProbability = 0.70;
+                    state.fakeoutBonusProbability = 0.05;
+                    tierName = `IA: CEBO FOMO (${ai.unbetRoundsCount} RONDAS SIN APOSTAR)`;
+                    tierBadgeStyle = 'bg-amber-500/20 text-amber-300 border-amber-500/50';
+                    updateSidebarDistributionUI(12, 26, 62, 'Lluvia FOMO (70%)', 'text-amber-400');
+
+                    if (rSection < 0.12) {
+                        crash = sampleSectionRNG(0.30, 0.95, 0.7);
+                        reason = 'Choque bajo ocasional (12%) para mantener realismo estadístico mientras mira.';
+                    } else if (rSection < 0.38) {
+                        crash = sampleSectionRNG(1.75, 3.80, 1.0);
+                        reason = 'Jugador mirando sin apostar: IA muestra multiplicador ganador para provocar FOMO.';
+                    } else {
+                        crash = sampleSectionRNG(4.00, 22.00, 1.4);
+                        reason = `¡Cebo Psicológico! Jugador pausó tras ${ai.consecutiveLosses}P o lleva ${idleSec}s mirando: IA dispara multiplicador alto.`;
+                    }
+                    aiPlanDesc = 'Detectada pausa del jugador. Desplegando multiplicadores altos para inducirlo a volver a apostar.';
+                } else {
+                    state.bonusSpawnProbability = 0.38;
+                    state.fakeoutBonusProbability = 0.28;
+                    tierName = 'IA: ESPECTADOR (CALIBRANDO)';
+                    tierBadgeStyle = 'bg-slate-800 text-slate-300 border-slate-600';
+                    updateSidebarDistributionUI(46, 30, 24, 'Moderado (38%)', 'text-sky-400');
+
+                    if (rSection < 0.46) {
+                        crash = sampleSectionRNG(0.14, 0.96, 0.65);
+                        reason = 'Primera ronda sin apuesta: 46% muere en Zona Casa para que el historial no parezca manipulado.';
+                    } else {
+                        crash = sampleSectionRNG(1.30, 6.40, 1.3);
+                        reason = 'Ronda sin apuesta: multiplicador atractivo para tentar entrada.';
+                    }
+                    aiPlanDesc = 'Monitoreando pausa del usuario con distribución mixta.';
+                }
+            }
+
+            // =========================================================================
+            // VÁLVULA DE RETENCIÓN ANTI-ABANDONO (APLICA A CUALQUIER TRAMO CON RACHA DE PÉRDIDAS)
+            // =========================================================================
+            else if (shouldTriggerMercyHook) {
+                state.currentTierIndex = 1;
+                state.bonusSpawnProbability = 0.58;
+                state.fakeoutBonusProbability = 0.10;
+                ai.nextMercyThreshold = 2 + Math.floor(nextRNG() * 3);
+
+                tierName = `IA: GANCHO DE RETENCIÓN (${bracket.label} | RACHA -${ai.consecutiveLosses}P)`;
+                tierBadgeStyle = 'bg-purple-500/20 text-purple-300 border-purple-500/50';
+                updateSidebarDistributionUI(15, 65, 20, 'Inyección Dopamina (58%)', 'text-purple-400');
+
+                const lowBound = 1.22;
+                const highBound = Math.max(lowBound + 0.18, maxSafeMercyMult);
+                crash = sampleSectionRNG(lowBound, highBound, 1.15);
+
+                reason = `¡Válvula Anti-Abandono activada! El jugador (${bracket.label}) llevaba ${ai.consecutiveLosses} derrotas seguidas (Riesgo Abandono ${ai.churnRisk}%). La IA le concede ${crash.toFixed(2)}x para mantenerlo en el juego.`;
+                aiPlanDesc = `Racha negativa detectada (-${ai.consecutiveLosses}P). Soltando ganancia controlada (${crash.toFixed(2)}x).`;
+            }
+
+            // =========================================================================
+            // TRAMO 1: TANTEO (< $5.000 CLP)
+            // =========================================================================
+            else if (bracket.id === 1) {
+                state.currentTierIndex = 1;
+                const tightenTanteo = ai.consecutiveWins >= 2 || isPlayerWinningOverall;
+                state.bonusSpawnProbability = tightenTanteo ? 0.25 : 0.48;
+                state.fakeoutBonusProbability = tightenTanteo ? 0.55 : 0.18;
+
+                tierName = tightenTanteo
+                    ? 'IA: TANTEO (<$5K) - CORTE DE RACHA'
+                    : 'IA: TANTEO (<$5K) - ENGANCHE';
+                tierBadgeStyle = tightenTanteo
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/50'
+                    : 'bg-emerald-500/20 text-neonGreen border-emerald-500/50';
+
+                const deadProb = tightenTanteo ? 0.64 : 0.36;
+                updateSidebarDistributionUI(
+                    Math.round(deadProb * 100),
+                    tightenTanteo ? 28 : 48,
+                    tightenTanteo ? 8 : 16,
+                    tightenTanteo ? 'Ajuste Casa (25%)' : 'Cebo Tanteo (48%)',
+                    tightenTanteo ? 'text-amber-400' : 'text-neonGreen'
+                );
+
+                if (rSection < deadProb) {
+                    crash = sampleSectionRNG(0.18, 0.97, 0.50);
+                    reason = tightenTanteo
+                        ? `Tramo Tanteo (<$5k): IA corta racha en ${crash.toFixed(2)}x.`
+                        : `Tramo Tanteo (<$5k): caída controlada en ${crash.toFixed(2)}x.`;
+                } else if (rSection < 0.86) {
+                    crash = sampleSectionRNG(1.15, 1.95, 1.25);
+                    reason = `Tramo Tanteo (${formatCLP(totalBet)}): victoria moderada (${crash.toFixed(2)}x).`;
+                } else {
+                    crash = sampleSectionRNG(2.00, 3.85, 1.6);
+                    reason = `Tramo Tanteo (<$5k): premio llamativo (${crash.toFixed(2)}x).`;
+                }
+                aiPlanDesc = `Apuesta en tramo Tanteo (<$5.000). Alternando victorias frecuentes con cuasi-impactos.`;
+            }
+
+            // =========================================================================
+            // TRAMO 2: JUEGA ($5.000 a $20.000 CLP)
+            // =========================================================================
+            else if (bracket.id === 2) {
+                state.currentTierIndex = 2;
+                const extraTight = ai.consecutiveWins >= 1 || isPlayerWinningOverall;
+                const deadProb = extraTight ? 0.74 : 0.62;
+                state.bonusSpawnProbability = 0.24;
+                state.fakeoutBonusProbability = 0.58;
+
+                tierName = `IA: TRAMO JUEGA ($5K-$20K | ${Math.round(deadProb * 100)}% CASA)`;
+                tierBadgeStyle = 'bg-sky-500/20 text-sky-300 border-sky-500/50';
+                updateSidebarDistributionUI(Math.round(deadProb * 100), 28, 100 - Math.round(deadProb * 100) - 28, 'Controlado (58% Esquiva)', 'text-sky-400');
+
+                if (rSection < deadProb * 0.42) {
+                    crash = sampleSectionRNG(0.03, 0.45, 1.35);
+                    reason = `Tramo Juega (${formatCLP(totalBet)}): choque rápido (${crash.toFixed(2)}x).`;
+                } else if (rSection < deadProb) {
+                    crash = sampleSectionRNG(0.46, 0.98, 0.42);
+                    reason = `Tramo Juega ($5k-$20k): agonía en ${crash.toFixed(2)}x.`;
+                } else if (rSection < 0.92) {
+                    crash = sampleSectionRNG(1.06, 1.72, 1.5);
+                    reason = `Tramo Juega ($5k-$20k): ventana de ganancia corta (${crash.toFixed(2)}x).`;
+                } else {
+                    crash = sampleSectionRNG(1.75, 2.95, 1.7);
+                    reason = `Tramo Juega ($5k-$20k): refuerzo variable (${crash.toFixed(2)}x).`;
+                }
+                aiPlanDesc = `Tramo $5.000 - $20.000 CLP activo. Aplicando desgaste estadístico natural.`;
+            }
+
+            // =========================================================================
+            // TRAMO 3: SE LO TOMA EN SERIO ($20.001 a $45.000 CLP)
+            // =========================================================================
+            else if (bracket.id === 3) {
+                state.currentTierIndex = 3;
+                const deadProb = isPlayerWinningOverall ? 0.86 : 0.80;
+                state.bonusSpawnProbability = 0.14;
+                state.fakeoutBonusProbability = 0.76;
+
+                tierName = `IA: EN SERIO ($20K-$45K | ${Math.round(deadProb * 100)}% CASA)`;
+                tierBadgeStyle = 'bg-orange-500/20 text-orange-400 border-orange-500/50';
+                updateSidebarDistributionUI(Math.round(deadProb * 100), 15, 5, 'Escaso (76% Esquiva)', 'text-orange-400');
+
+                if (rSection < 0.36) {
+                    crash = sampleSectionRNG(0.01, 0.38, 1.5);
+                    reason = `Tramo En Serio (${formatCLP(totalBet)}): impacto temprano (${crash.toFixed(2)}x).`;
+                } else if (rSection < deadProb) {
+                    crash = sampleSectionRNG(0.40, 0.99, 0.35);
+                    reason = `Tramo En Serio ($20k-$45k): tensión cayendo en ${crash.toFixed(2)}x.`;
+                } else if (rSection < 0.96) {
+                    crash = sampleSectionRNG(1.03, 1.48, 1.65);
+                    reason = `Tramo En Serio ($20k-$45k): cruce ajustado (${crash.toFixed(2)}x).`;
+                } else {
+                    crash = sampleSectionRNG(1.50, 2.25, 1.8);
+                    reason = `Tramo En Serio ($20k-$45k): escape (${crash.toFixed(2)}x).`;
+                }
+                aiPlanDesc = `Apuesta Seria (${formatCLP(totalBet)}). ${Math.round(deadProb * 100)}% de bloqueo bajo 1.00x.`;
+            }
+
+            // =========================================================================
+            // TRAMO 4: BALLENAS GRANDES (> $45.000 CLP)
+            // =========================================================================
+            else {
+                state.currentTierIndex = 3;
+                state.bonusSpawnProbability = 0.08;
+                state.fakeoutBonusProbability = 0.88;
+                tierName = 'IA: BALLENA GRANDE (>$45K | 91% CASA)';
+                tierBadgeStyle = 'bg-red-500/20 text-neonRed border-red-500/50';
+                updateSidebarDistributionUI(91, 8, 1, 'Sequía Ballena (88% Esquiva)', 'text-neonRed');
+
+                if (rSection < 0.42) {
+                    crash = sampleSectionRNG(0.00, 0.34, 1.65);
+                    reason = `¡BALLENA GRANDE (${formatCLP(totalBet)})! Liquidación rápida (91% dominio de banca).`;
+                } else if (rSection < 0.91) {
+                    crash = sampleSectionRNG(0.35, 0.99, 0.32);
+                    reason = `¡Ballena Grande! Muere en ${crash.toFixed(2)}x.`;
+                } else if (rSection < 0.99) {
+                    crash = sampleSectionRNG(1.02, 1.36, 1.7);
+                    reason = 'Margen del 8% en Ballena Grande [1.02x-1.36x].';
+                } else {
+                    crash = sampleSectionRNG(1.37, 1.88, 1.9);
+                    reason = 'Excepción del 1% en Ballena Grande.';
+                }
+                aiPlanDesc = `¡Ballena Grande (${formatCLP(totalBet)})! 91% favor banca por distribución natural.`;
+            }
+
+            // Record bet timestamp & amount for next round's AI comparison
+            if (totalBet > 0) {
+                ai.lastBetTimestamp = now;
+                ai.unbetRoundsCount = 0;
+                ai.lastBetTotal = totalBet;
+            }
+            ai.profileName = aiProfileTag;
+
+            const finalCrash = Number(crash.toFixed(2));
+            state.currentTierLabel = tierName;
+
+            // Update Top Dev Telemetry Bar & Right AI Sidebar
+            document.getElementById('devTierBadge').textContent = tierName;
+            document.getElementById('devTierBadge').className = `font-mono-num font-extrabold px-2.5 py-0.5 rounded border ${tierBadgeStyle}`;
+            document.getElementById('devAiProfile').textContent = aiProfileTag;
+            document.getElementById('devTotalBet').textContent = formatCLP(totalBet);
+            document.getElementById('devBetRatio').textContent = `${Math.round(betRatio * 100)}%`;
+            document.getElementById('devBonusProb').textContent = `${Math.round(state.bonusSpawnProbability * 100)}% (Esquiva: ${Math.round(state.fakeoutBonusProbability * 100)}%)`;
+            document.getElementById('devCrashTarget').textContent = `${finalCrash.toFixed(2)}x`;
+            document.getElementById('devReasonText').textContent = reason;
+
+            document.getElementById('aiStateLabel').textContent = aiProfileTag;
+            document.getElementById('aiTiltScore').textContent = `${ai.churnRisk}%`;
+            document.getElementById('aiPlanDescription').textContent = aiPlanDesc;
+            updateHouseProfitDisplay();
+            renderUserMemoryRibbon();
+
+            appendRngLog(
+                `[R#${state.roundCount}] ${aiProfileTag} (${formatCLP(totalBet)}) | Racha:${ai.consecutiveLosses > 0 ? '-' + ai.consecutiveLosses + 'P' : '+' + ai.consecutiveWins + 'G'} -> ${finalCrash.toFixed(2)}x`,
+                finalCrash < 1.0 ? 'text-neonRed' : 'text-neonGreen'
+            );
+
+            return finalCrash;
+        }
+
+        // Refresh Dev preview during WAITING phase when player toggles bets
+        function updateDevWaitingPreview() {
+            if (state.phase !== 'WAITING') return;
+            const bet1 = state.bets[1].active ? state.bets[1].amount : 0;
+            const bet2 = state.bets[2].active ? state.bets[2].amount : 0;
+            const totalBet = bet1 + bet2;
+            const bankroll = Math.max(500, state.balance + totalBet);
+            const ratio = totalBet / bankroll;
+            const bracket = classifyBetBracket(totalBet);
+            const ai = state.aiMetrics;
+
+            document.getElementById('devTotalBet').textContent = formatCLP(totalBet);
+            document.getElementById('devBetRatio').textContent = `${Math.round(ratio * 100)}%`;
+            document.getElementById('devCrashTarget').textContent = 'Calculando al iniciar...';
+            updateHouseProfitDisplay();
+            renderUserMemoryRibbon();
+
+            const badge = document.getElementById('devTierBadge');
+            const reasonEl = document.getElementById('devReasonText');
+            const bonusProbEl = document.getElementById('devBonusProb');
+            const aiProfileEl = document.getElementById('devAiProfile');
+            const aiStateEl = document.getElementById('aiStateLabel');
+            const aiPlanEl = document.getElementById('aiPlanDescription');
+
+            aiProfileEl.textContent = bracket.label;
+            aiStateEl.textContent = bracket.label;
+
+            const willConsiderMercy = totalBet > 0 && ai.consecutiveLosses >= ai.nextMercyThreshold && bankroll <= state.initialDeposit;
+
+            if (bracket.id === 0) {
+                badge.textContent = 'PREVISIÓN IA: ESPECTADOR ($0)';
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/50';
+                bonusProbEl.textContent = '40%-70% (Modo FOMO)';
+                reasonEl.textContent = 'Sin apuesta activa: si miras varias rondas o vienes de perder, la IA subirá los multiplicadores para tentarte.';
+            } else if (willConsiderMercy) {
+                badge.textContent = `PREVISIÓN IA: POSIBLE SALVAVIDAS ANTI-ABANDONO (RACHA -${ai.consecutiveLosses}P)`;
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-purple-500/20 text-purple-300 border-purple-500/50';
+                bonusProbEl.textContent = '58% (Retención Activa)';
+                reasonEl.textContent = `Llevas ${ai.consecutiveLosses} derrotas seguidas en ${bracket.label}: alta probabilidad de que la IA suelte un multiplicador ganador controlado (1.20x-1.95x) para que no abandones el juego.`;
+            } else if (bracket.id === 1) {
+                badge.textContent = 'PREVISIÓN IA: TRAMO TANTEO (< $5.000 CLP)';
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-emerald-500/20 text-neonGreen border-emerald-500/50';
+                bonusProbEl.textContent = '48% (Cebo Inicial)';
+                reasonEl.textContent = 'Apuesta menor a $5.000: probabilidades favorables de micro-victorias (salvo que lleves racha ganadora) para que subas al tramo $5k-$20k.';
+            } else if (bracket.id === 2) {
+                badge.textContent = 'PREVISIÓN IA: TRAMO JUEGA ($5.000 - $20.000 CLP)';
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-sky-500/20 text-sky-300 border-sky-500/50';
+                bonusProbEl.textContent = '24% (Desgaste Medio)';
+                reasonEl.textContent = 'Apuesta entre $5.000 y $20.000: ~62%-74% de impacto en Zona Casa combinado con victorias intermitentes según tu historial.';
+            } else if (bracket.id === 3) {
+                badge.textContent = 'PREVISIÓN IA: SE LO TOMA EN SERIO ($20.001 - $45.000 CLP)';
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/50';
+                bonusProbEl.textContent = '14% (Alta Presión)';
+                reasonEl.textContent = 'Apuesta seria ($20k-$45k): 80%-86% de ventaja para la casa, pero con válvula de alivio si acumulas varias pérdidas seguidas.';
+            } else {
+                badge.textContent = 'PREVISIÓN IA: BALLENA GRANDE (> $45.000 CLP | 91% CASA)';
+                badge.className = 'font-mono-num font-extrabold px-2.5 py-0.5 rounded border bg-red-500/20 text-neonRed border-red-500/50';
+                bonusProbEl.textContent = '8% (Dominio Banca 91%)';
+                reasonEl.textContent = `Ballena Grande (> $45.000): 91% de choque bajo 1.00x. Si pierde ${ai.nextMercyThreshold} veces seguidas, la IA le dará un respiro calculado para retenerla.`;
+            }
+            aiPlanEl.textContent = reasonEl.textContent;
+        }
+
+        /* ============================================================================
+           3. COLLECTIBLE BONUS FRUITS & METEOR CRYSTALS ENGINE (PRNG GATED)
+           ============================================================================ */
+        const BONUS_CATALOG = [
+            { id: 'berry', emoji: '🍒', label: 'Baya Jurásica', bonus: 0.01, color: '#4ade80', weightTier1: 35, weightHard: 75 },
+            { id: 'mango', emoji: '🥭', label: 'Fruta Ámbar', bonus: 0.03, color: '#fbbf24', weightTier1: 30, weightHard: 18 },
+            { id: 'pineapple', emoji: '🍍', label: 'Piña Dorada', bonus: 0.05, color: '#f59e0b', weightTier1: 20, weightHard: 5 },
+            { id: 'crystal', emoji: '☄️', label: 'Cristal Kriptón', bonus: 0.10, color: '#a855f7', weightTier1: 11, weightHard: 2 },
+            { id: 'egg', emoji: '💎', label: 'Huevo Diamante', bonus: 0.25, color: '#38bdf8', weightTier1: 4, weightHard: 0 }
+        ];
+
+        function trySpawnBonusItem() {
+            if (state.phase !== 'RUNNING' || state.FatalMeteor) return;
+
+            // Roll PRNG against current tier's bonusSpawnProbability
+            const roll = nextRNG();
+            if (roll > state.bonusSpawnProbability) return;
+
+            // Choose which bonus item to spawn using weighted PRNG according to Tier
+            const isFavorableTier = (state.currentTierIndex === 0 || state.currentTierIndex === 1);
+            let totalWeight = 0;
+            BONUS_CATALOG.forEach(item => {
+                totalWeight += isFavorableTier ? item.weightTier1 : item.weightHard;
+            });
+
+            let pickRoll = nextRNG() * totalWeight;
+            let chosen = BONUS_CATALOG[0];
+            for (const item of BONUS_CATALOG) {
+                const w = isFavorableTier ? item.weightTier1 : item.weightHard;
+                if (pickRoll <= w) {
+                    chosen = item;
+                    break;
+                }
+                pickRoll -= w;
+            }
+
+            // CRITICAL HOUSE GUARD:
+            // If collecting this bonus would push the Dino past a pre-calculated House Dead-Zone crashPoint,
+            // force the item to be a "Fake-out" (bounces high over the Dino's head) so the house NEVER loses its edge!
+            let isFakeout = nextRNG() < state.fakeoutBonusProbability;
+            if (state.multiplier + chosen.bonus >= state.crashPoint - 0.03) {
+                isFakeout = true;
+            }
+
+            state.bonusItems.push({
+                ...chosen,
+                x: cw + 50,
+                y: isFakeout ? dinoPos.y - 95 : dinoPos.y - 16,
+                baseY: isFakeout ? dinoPos.y - 95 : dinoPos.y - 16,
+                vx: 4.8 + Math.min(5, state.multiplier * 0.8),
+                isFakeout,
+                collected: false,
+                missedLogged: false,
+                bobPhase: nextRNG() * Math.PI * 2
+            });
+        }
+
+        /* ============================================================================
+           4. BETTING CONTROLS & DUAL SLOT LOGIC
+           ============================================================================ */
+        function modifyBet(slot, action) {
+            playSfx('click');
+            const input = document.getElementById(`betAmount${slot}`);
+            let val = parseInt(input.value) || 1000;
+
+            if (action === 'MAX') val = Math.max(500, state.balance);
+            else if (action === 'DOUBLE') val = val * 2;
+            else if (action === 'HALF') val = Math.max(500, Math.floor(val / 2));
+            else val += action;
+
+            if (val > state.balance && state.balance >= 500) val = state.balance;
+            input.value = val;
+            syncBetButtonUI(slot);
+        }
+
+        document.getElementById('betAmount1').addEventListener('input', () => syncBetButtonUI(1));
+        document.getElementById('betAmount2').addEventListener('input', () => syncBetButtonUI(2));
+
+        function handleBetClick(slot) {
+            const b = state.bets[slot];
+            const inputEl = document.getElementById(`betAmount${slot}`);
+            const desiredAmount = parseInt(inputEl.value) || 0;
+
+            // If RUNNING and bet is active & not cashed out -> CASH OUT NOW!
+            if (state.phase === 'RUNNING' && b.active && !b.cashedOut) {
+                executeCashout(slot, state.multiplier);
+                return;
+            }
+
+            // If WAITING phase: toggle bet placement immediately
+            if (state.phase === 'WAITING') {
+                if (b.active) {
+                    // Cancel bet and refund
+                    playSfx('click');
+                    state.balance += b.amount;
+                    b.active = false;
+                    updateBalanceDisplay();
+                    syncBetButtonUI(slot);
+                    updateDevWaitingPreview();
+                } else {
+                    if (desiredAmount < 500 || desiredAmount > state.balance) {
+                        shakePanel(slot);
+                        return;
+                    }
+                    playSfx('click');
+                    state.balance -= desiredAmount;
+                    b.amount = desiredAmount;
+                    b.active = true;
+                    b.cashedOut = false;
+                    updateBalanceDisplay();
+                    syncBetButtonUI(slot);
+                    updateDevWaitingPreview();
+                }
+                return;
+            }
+
+            // If RUNNING or CRASHED: allow queueing/canceling bet for NEXT round
+            if (b.queued) {
+                playSfx('click');
+                b.queued = false;
+                syncBetButtonUI(slot);
+            } else {
+                if (desiredAmount < 500 || desiredAmount > state.balance) {
+                    shakePanel(slot);
+                    return;
+                }
+                playSfx('click');
+                b.amount = desiredAmount;
+                b.queued = true;
+                syncBetButtonUI(slot);
+            }
+        }
+
+        function shakePanel(slot) {
+            const panel = document.getElementById(`betPanel${slot}`);
+            panel.classList.add('border-neonRed');
+            setTimeout(() => panel.classList.remove('border-neonRed'), 450);
+        }
+
+        function executeCashout(slot, mult) {
+            const b = state.bets[slot];
+            if (!b.active || b.cashedOut) return;
+
+            b.cashedOut = true;
+            b.cashoutMult = mult;
+            const winAmount = Math.round(b.amount * mult);
+            state.balance += winAmount;
+            state.playerCashedOutEarlyMult = mult;
+
+            updateBalanceDisplay();
+            playSfx('cashout');
+            spawnConfetti(dinoPos.x, dinoPos.y - 30);
+            state.floatingTexts.push({
+                text: `+${formatCLP(winAmount)}`,
+                x: dinoPos.x,
+                y: dinoPos.y - 45,
+                color: '#00e701',
+                alpha: 1.0,
+                vy: -1.8
+            });
+
+            showWinToast(`¡RETIRO APUESTA ${slot}! (${mult.toFixed(2)}x)`, `+${formatCLP(winAmount)}`);
+            syncBetButtonUI(slot);
+        }
+
+        function syncBetButtonUI(slot) {
+            const b = state.bets[slot];
+            const btn = document.getElementById(`betBtn${slot}`);
+            const title = document.getElementById(`betBtn${slot}Title`);
+            const sub = document.getElementById(`betBtn${slot}Sub`);
+            const badge = document.getElementById(`panel${slot}StatusBadge`);
+            const inputVal = parseInt(document.getElementById(`betAmount${slot}`).value) || 0;
+
+            if (state.phase === 'RUNNING' && b.active && !b.cashedOut) {
+                const liveWin = Math.round(b.amount * state.multiplier);
+                const isInLossZone = state.multiplier < 1.00;
+                btn.className = isInLossZone
+                    ? "w-full h-full min-h-[76px] rounded-xl font-black text-sm uppercase tracking-wider transition transform active:scale-95 flex flex-col items-center justify-center px-3 shadow-lg bg-slate-800 hover:bg-slate-700 border-2 border-amber-500/60 text-amber-300"
+                    : "w-full h-full min-h-[76px] rounded-xl font-black text-base uppercase tracking-wider transition transform active:scale-95 flex flex-col items-center justify-center px-3 shadow-lg bg-neonAmber hover:bg-amber-400 text-slate-950 glow-amber btn-pulse";
+                title.textContent = isInLossZone ? "RESCATAR (< 1.00x)" : "RETIRAR AHORA";
+                sub.textContent = `${formatCLP(liveWin)} (${state.multiplier.toFixed(2)}x)`;
+                badge.textContent = isInLossZone ? "Recuperando..." : "¡En Ganancia!";
+                badge.className = isInLossZone ? "text-xs text-rose-400 font-bold animate-pulse" : "text-xs text-neonGreen font-extrabold animate-pulse";
+            } 
+            else if (state.phase === 'RUNNING' && b.cashedOut) {
+                btn.className = "w-full h-full min-h-[76px] rounded-xl font-black text-sm uppercase tracking-wider flex flex-col items-center justify-center px-3 bg-emerald-950 border border-neonGreen/50 text-neonGreen cursor-default";
+                title.textContent = `GANASTE (${b.cashoutMult.toFixed(2)}x)`;
+                sub.textContent = formatCLP(b.amount * b.cashoutMult);
+                badge.textContent = "Retirado";
+                badge.className = "text-xs text-neonGreen font-bold";
+            }
+            else if (state.phase === 'WAITING' && b.active) {
+                btn.className = "w-full h-full min-h-[76px] rounded-xl font-black text-sm uppercase tracking-wider transition flex flex-col items-center justify-center px-3 bg-neonRed hover:bg-red-500 text-white glow-red";
+                title.textContent = "APUESTA LISTA";
+                sub.textContent = `Cancelar (${formatCLP(b.amount)})`;
+                badge.textContent = "Confirmada";
+                badge.className = "text-xs text-neonGreen font-bold";
+            }
+            else if (b.queued) {
+                btn.className = "w-full h-full min-h-[76px] rounded-xl font-black text-sm uppercase tracking-wider transition flex flex-col items-center justify-center px-3 bg-neonRed/90 hover:bg-red-500 text-white";
+                title.textContent = "EN COLA (SIG. RONDA)";
+                sub.textContent = `Cancelar (${formatCLP(b.amount)})`;
+                badge.textContent = "Programada";
+                badge.className = "text-xs text-amber-400 font-bold";
+            }
+            else {
+                btn.className = "w-full h-full min-h-[76px] rounded-xl font-black text-base uppercase tracking-wider transition transform active:scale-95 flex flex-col items-center justify-center px-3 shadow-lg bg-neonGreen hover:bg-neonGreenHover text-slate-950 glow-green";
+                title.textContent = state.phase === 'WAITING' ? "APOSTAR" : "APOSTAR (SIG. RONDA)";
+                sub.textContent = formatCLP(inputVal);
+                badge.textContent = "Lista";
+                badge.className = "text-xs text-slate-400 font-semibold";
+            }
+        }
+
+        function showWinToast(title, amountText) {
+            const t = document.getElementById('winToast');
+            document.getElementById('winToastTitle').textContent = title;
+            document.getElementById('winToastAmount').textContent = amountText;
+            t.classList.remove('translate-y-28', 'opacity-0');
+            setTimeout(() => {
+                t.classList.add('translate-y-28', 'opacity-0');
+            }, 3000);
+        }
+
+        function renderHistoryRibbon() {
+            const container = document.getElementById('historyRibbon');
+            container.innerHTML = '';
+            state.history.slice(0, 16).forEach((mult, idx) => {
+                const pill = document.createElement('div');
+                let style = 'bg-slate-800/90 text-sky-400 border-sky-500/30'; // 1.00x - 1.99x
+                if (mult >= 10.0) {
+                    style = 'bg-purple-500/20 text-purple-300 border-purple-400 shadow-sm shadow-purple-500/30';
+                } else if (mult >= 2.0) {
+                    style = 'bg-emerald-500/20 text-neonGreen border-emerald-500/40';
+                } else if (mult < 1.00) {
+                    style = 'bg-red-500/20 text-neonRed border-red-500/40';
+                }
+                const latestRing = idx === 0 ? 'ring-2 ring-white/40 scale-105' : '';
+                pill.className = `px-2.5 py-0.5 rounded-lg text-xs font-mono-num font-extrabold border shrink-0 transition ${style} ${latestRing}`;
+                pill.textContent = `${mult.toFixed(2)}x`;
+                container.appendChild(pill);
+            });
+        }
+
+        /* ============================================================================
+           5. ROUND STATE MACHINE (WAITING -> RUNNING -> CRASHED)
+           ============================================================================ */
+        function startWaitingPhase() {
+            state.phase = 'WAITING';
+            state.waitStartTime = performance.now();
+            state.baseMultiplier = 0.00;
+            state.bonusMultiplier = 0.00;
+            state.multiplier = 0.00;
+            state.FatalMeteor = null;
+            state.nearMisses = [];
+            state.bonusItems = [];
+            state.playerCashedOutEarlyMult = null;
+
+            // Process queued bets for this new round
+            [1, 2].forEach(slot => {
+                const b = state.bets[slot];
+                b.active = false;
+                b.cashedOut = false;
+                if (b.queued) {
+                    b.queued = false;
+                    if (state.balance >= b.amount) {
+                        state.balance -= b.amount;
+                        b.active = true;
+                        updateBalanceDisplay();
+                    }
+                }
+                syncBetButtonUI(slot);
+            });
+
+            // HUD updates
+            document.getElementById('fomoTauntBox').classList.add('hidden');
+            document.getElementById('seismicAlertBanner').classList.add('hidden');
+            document.getElementById('countdownWrapper').classList.remove('hidden');
+            document.getElementById('bonusAccumulatorBadge').textContent = 'Bonus Items: +0.00x';
+            document.getElementById('multiplierBreakdown').textContent = 'Base: 0.00x + Bonus: 0.00x';
+            const multEl = document.getElementById('multiplierReadout');
+            multEl.textContent = '0.00x';
+            multEl.className = 'font-mono-num text-5xl sm:text-7xl font-black text-slate-300 tracking-tighter mult-shadow';
+
+            const banner = document.getElementById('roundStateBanner');
+            banner.textContent = 'PREPARANDO SEMILLA PRNG (DESDE 0.00x)... HAZ TU APUESTA';
+            banner.className = 'mt-2 px-4 py-1 rounded-full bg-slate-900/90 border border-emerald-500/40 text-xs font-extrabold uppercase tracking-widest text-neonGreen';
+
+            updateDevWaitingPreview();
+        }
+
+        function startRunningPhase() {
+            state.phase = 'RUNNING';
+            state.startTime = performance.now();
+            state.lastDangerWaveTime = state.startTime;
+            state.lastBonusSpawnCheckTime = state.startTime;
+            state.baseMultiplier = 0.00;
+            state.bonusMultiplier = 0.00;
+            state.multiplier = 0.00;
+            state.bonusItems = [];
+            state.crashPoint = calculateNextCrashPoint();
+            state.FatalMeteor = null;
+            state.playerSkippedRound = !state.bets[1].active && !state.bets[2].active;
+
+            document.getElementById('countdownWrapper').classList.add('hidden');
+            const multEl = document.getElementById('multiplierReadout');
+            multEl.className = 'font-mono-num text-6xl sm:text-8xl font-black text-amber-400 tracking-tighter mult-shadow';
+
+            const banner = document.getElementById('roundStateBanner');
+            banner.textContent = '⚠️ ZONA DE LA CASA (0.00x - 0.99x): ¡BUSCA FRUTAS PARA SUBIR A 1.00x!';
+            banner.className = 'mt-2 px-4 py-1 rounded-full bg-amber-950/90 border border-amber-500/50 text-xs font-extrabold uppercase tracking-widest text-amber-300';
+
+            syncBetButtonUI(1);
+            syncBetButtonUI(2);
+        }
+
+        function triggerCrashPhase() {
+            state.phase = 'CRASHED';
+            state.multiplier = state.crashPoint;
+            state.cameraShake = 30;
+            state.screenFlash = 0.90;
+            document.getElementById('seismicAlertBanner').classList.add('hidden');
+
+            playSfx('crash');
+            spawnAsteroidExplosion(dinoPos.x + 10, dinoPos.y + 10);
+
+            // Evaluate User Round Outcome & Save into Persistent In-Game User History
+            let roundBetTotal = 0;
+            let roundPayoutTotal = 0;
+            [1, 2].forEach(slot => {
+                const b = state.bets[slot];
+                if (b.active) {
+                    roundBetTotal += b.amount;
+                    if (b.cashedOut) {
+                        roundPayoutTotal += Math.round(b.amount * b.cashoutMult);
+                    }
+                }
+            });
+
+            if (roundBetTotal > 0) {
+                const netRoundProfit = roundPayoutTotal - roundBetTotal;
+                const playerWonRound = netRoundProfit > 0;
+                const ai = state.aiMetrics;
+
+                if (playerWonRound) {
+                    ai.consecutiveWins++;
+                    ai.consecutiveLosses = 0;
+                    ai.totalWins++;
+                } else {
+                    ai.consecutiveLosses++;
+                    ai.consecutiveWins = 0;
+                    ai.totalLosses++;
+                }
+
+                ai.userRoundHistory.unshift({
+                    round: state.roundCount,
+                    bet: roundBetTotal,
+                    payout: roundPayoutTotal,
+                    net: netRoundProfit,
+                    won: playerWonRound,
+                    mult: state.crashPoint,
+                    tier: classifyBetBracket(roundBetTotal).label
+                });
+                if (ai.userRoundHistory.length > 25) ai.userRoundHistory.pop();
+            }
+
+            updateHouseProfitDisplay();
+            renderUserMemoryRibbon();
+
+            // Record history
+            state.history.unshift(state.crashPoint);
+            if (state.history.length > 20) state.history.pop();
+            renderHistoryRibbon();
+
+            // Update Multiplier & Banner to Red Crash state
+            const multEl = document.getElementById('multiplierReadout');
+            multEl.textContent = `${state.crashPoint.toFixed(2)}x`;
+            multEl.className = 'font-mono-num text-6xl sm:text-8xl font-black text-neonRed tracking-tighter mult-shadow scale-105';
+
+            const banner = document.getElementById('roundStateBanner');
+            banner.textContent = `☄️ ¡METEORITO IMPACTÓ A ${state.crashPoint.toFixed(2)}x!`;
+            banner.className = 'mt-2 px-4 py-1 rounded-full bg-red-950/90 border border-neonRed text-xs sm:text-sm font-black uppercase tracking-widest text-neonRed shadow-lg glow-red';
+
+            // Clear active bets that didn't cash out
+            [1, 2].forEach(slot => {
+                state.bets[slot].active = false;
+                syncBetButtonUI(slot);
+            });
+
+            // Restart waiting phase after 3.6 seconds so player sees skeleton Dino & crater
+            setTimeout(() => {
+                startWaitingPhase();
+            }, 3600);
+        }
+
+        /* ============================================================================
+           6. CUSTOM HTML5 CANVAS PREHISTORIC WORLD, DINO & ASTEROID COLLISIONS
+           ============================================================================ */
+        const canvas = document.getElementById('dinoCanvas');
+        const ctx = canvas.getContext('2d');
+        let cw = 800, ch = 400;
+        let worldScroll = 0;
+        const dinoPos = { x: 180, y: 280 };
+
+        // Scenery Layers
+        const stars = Array.from({ length: 45 }, () => ({
+            x: Math.random() * 1000,
+            y: Math.random() * 200,
+            r: 1 + Math.random() * 1.8,
+            blink: Math.random() * Math.PI
+        }));
+
+        const mountains = [
+            { x: 80, w: 260, h: 155, volcano: true },
+            { x: 420, w: 220, h: 120, volcano: false },
+            { x: 700, w: 290, h: 170, volcano: true }
+        ];
+
+        const trees = Array.from({ length: 9 }, (_, i) => ({
+            x: i * 140 + Math.random() * 40,
+            h: 48 + Math.random() * 30
+        }));
+
+        const groundPebbles = Array.from({ length: 22 }, (_, i) => ({
+            x: i * 55 + Math.random() * 30,
+            yOffset: 8 + Math.random() * 35,
+            w: 4 + Math.random() * 8
+        }));
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            cw = rect.width;
+            ch = rect.height;
+            canvas.width = cw * window.devicePixelRatio;
+            canvas.height = ch * window.devicePixelRatio;
+            ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+            dinoPos.x = Math.min(220, cw * 0.24);
+            dinoPos.y = ch * 0.73;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // Spawn explosion particles when meteor hits Dino
+        function spawnAsteroidExplosion(x, y) {
+            const colors = ['#ff1e42', '#ff7b00', '#facc15', '#ffffff', '#475569'];
+            for (let i = 0; i < 65; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 11;
+                state.particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 2,
+                    r: 3 + Math.random() * 7,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    decay: 0.015 + Math.random() * 0.02,
+                    gravity: 0.22
+                });
+            }
+        }
+
+        // Spawn celebratory green/gold coins on cashout
+        function spawnConfetti(x, y) {
+            const colors = ['#00e701', '#facc15', '#34d399', '#ffffff'];
+            for (let i = 0; i < 32; i++) {
+                const angle = -Math.PI / 2 + (Math.random() - 0.5) * 2.2;
+                const speed = 3 + Math.random() * 7;
+                state.particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    r: 3 + Math.random() * 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    decay: 0.02,
+                    gravity: 0.18
+                });
+            }
+        }
+
+        // Spawn Near-Miss Meteor or Seismic Danger Wave to create visual suspense
+        function triggerNearMissWave() {
+            if (state.phase !== 'RUNNING' || state.FatalMeteor) return;
+            const isBehind = Math.random() < 0.60;
+            const targetX = isBehind ? dinoPos.x - 50 - Math.random() * 35 : dinoPos.x + 75 + Math.random() * 45;
+            state.nearMisses.push({
+                x: cw + 60,
+                y: -40,
+                targetX,
+                targetY: dinoPos.y + 15,
+                progress: 0,
+                speed: 0.024 + Math.random() * 0.012,
+                exploded: false
+            });
+            state.dangerShadowAlpha = 0.45;
+            playSfx('siren');
+            const alertEl = document.getElementById('seismicAlertBanner');
+            alertEl.classList.remove('hidden');
+            setTimeout(() => {
+                if (state.phase === 'RUNNING') alertEl.classList.add('hidden');
+            }, 1900);
+        }
+
+        // Draw dynamic sky that shifts color with multiplier
+        function drawSkyAndAtmosphere() {
+            const m = state.multiplier;
+            let topColor = '#090d1a';
+            let botColor = '#1e1b4b';
+            let badgeText = '🌋 Valle Prehistórico';
+
+            if (m >= 10) {
+                topColor = '#05020a';
+                botColor = '#4c0519';
+                badgeText = '🌌 Stratósfera Caótica (10x+)';
+            } else if (m >= 3) {
+                topColor = '#180614';
+                botColor = '#7c2d12';
+                badgeText = '🔥 Tormenta de Meteoros';
+            } else if (m >= 1.5) {
+                topColor = '#0f172a';
+                botColor = '#3b0764';
+                badgeText = '☄️ Lluvia Ácida';
+            }
+            document.getElementById('skyPhaseBadge').textContent = badgeText;
+
+            const grad = ctx.createLinearGradient(0, 0, 0, ch * 0.78);
+            grad.addColorStop(0, topColor);
+            grad.addColorStop(1, botColor);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, cw, ch);
+
+            // Stars & glowing embers
+            stars.forEach(s => {
+                s.blink += 0.05;
+                const alpha = 0.3 + Math.sin(s.blink) * 0.3;
+                ctx.fillStyle = m >= 3 ? `rgba(251, 146, 60, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
+                const sx = (s.x - worldScroll * 0.08) % cw;
+                ctx.beginPath();
+                ctx.arc(sx < 0 ? sx + cw : sx, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function drawParallaxMountainsAndTrees(groundY) {
+            // Distant Volcanoes & Mountains
+            mountains.forEach(m => {
+                let mx = ((m.x - worldScroll * 0.18) % (cw + 320));
+                if (mx < -300) mx += cw + 320;
+
+                ctx.fillStyle = '#131829';
+                ctx.beginPath();
+                ctx.moveTo(mx, groundY);
+                ctx.lineTo(mx + m.w * 0.42, groundY - m.h);
+                ctx.lineTo(mx + m.w * 0.58, groundY - m.h);
+                ctx.lineTo(mx + m.w, groundY);
+                ctx.closePath();
+                ctx.fill();
+
+                // Glowing Lava Crater on Volcanoes
+                if (m.volcano) {
+                    const lavaGrad = ctx.createLinearGradient(mx, groundY - m.h, mx, groundY - m.h + 35);
+                    lavaGrad.addColorStop(0, '#ff4500');
+                    lavaGrad.addColorStop(1, 'rgba(255, 69, 0, 0)');
+                    ctx.fillStyle = lavaGrad;
+                    ctx.beginPath();
+                    ctx.moveTo(mx + m.w * 0.42, groundY - m.h);
+                    ctx.lineTo(mx + m.w * 0.58, groundY - m.h);
+                    ctx.lineTo(mx + m.w * 0.64, groundY - m.h + 28);
+                    ctx.lineTo(mx + m.w * 0.36, groundY - m.h + 28);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            });
+
+            // Midground Prehistoric Silhouette Trees
+            trees.forEach(t => {
+                let tx = ((t.x - worldScroll * 0.55) % (cw + 160));
+                if (tx < -80) tx += cw + 160;
+
+                ctx.fillStyle = '#0c1322';
+                ctx.fillRect(tx - 3, groundY - t.h, 6, t.h);
+                ctx.beginPath();
+                ctx.arc(tx, groundY - t.h, 18, 0, Math.PI * 2);
+                ctx.arc(tx - 12, groundY - t.h + 8, 13, 0, Math.PI * 2);
+                ctx.arc(tx + 12, groundY - t.h + 8, 13, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function drawGroundTrack(groundY) {
+            // Main prehistoric ground
+            ctx.fillStyle = '#0b131e';
+            ctx.fillRect(0, groundY, cw, ch - groundY);
+
+            // Neon top grass/crust strip
+            const stripColor = state.phase === 'CRASHED' ? '#ff1e42' : '#10b981';
+            ctx.fillStyle = stripColor;
+            ctx.fillRect(0, groundY, cw, 4);
+
+            // Scrolling pebbles
+            ctx.fillStyle = '#1e293b';
+            groundPebbles.forEach(p => {
+                let px = ((p.x - worldScroll * 1.4) % (cw + 60));
+                if (px < -30) px += cw + 60;
+                ctx.fillRect(px, groundY + p.yOffset, p.w, 3);
+            });
+        }
+
+        // Draw Detailed Animated T-Rex OR Charred Skeleton in Crater when crashed
+        function drawDinoCharacter(x, y, time) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            if (state.phase === 'CRASHED') {
+                // Draw Impact Crater on Ground
+                ctx.fillStyle = '#05070c';
+                ctx.beginPath();
+                ctx.ellipse(10, 22, 48, 11, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#ff4500';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw Charred Fossil / Skeleton T-Rex
+                ctx.fillStyle = '#cbd5e1';
+                // Ribcage
+                ctx.fillRect(-12, -5, 24, 14);
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(-8, -2, 4, 9);
+                ctx.fillRect(0, -2, 4, 9);
+                ctx.fillRect(8, -2, 4, 9);
+
+                // Skull tilted
+                ctx.fillStyle = '#e2e8f0';
+                ctx.fillRect(10, -24, 24, 16);
+                // Dizzy X Eye
+                ctx.strokeStyle = '#ff1e42';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(22, -20); ctx.lineTo(28, -14);
+                ctx.moveTo(28, -20); ctx.lineTo(22, -14);
+                ctx.stroke();
+
+                ctx.restore();
+                return;
+            }
+
+            // Running Bobbing Motion
+            const isRunning = state.phase === 'RUNNING';
+            const speedFactor = isRunning ? Math.min(2.2, 1 + (state.multiplier - 1) * 0.25) : 0.3;
+            const bob = isRunning ? Math.abs(Math.sin(time * 0.015 * speedFactor)) * -7 : Math.sin(time * 0.005) * 2;
+            const tilt = isRunning ? 0.08 : 0;
+
+            ctx.translate(0, bob);
+            ctx.rotate(tilt);
+
+            // Aura glow when multiplier is high
+            if (state.multiplier >= 2.0 && isRunning) {
+                ctx.shadowColor = state.multiplier >= 10 ? '#a855f7' : '#00e701';
+                ctx.shadowBlur = 18;
+            }
+
+            // Tail
+            ctx.fillStyle = '#059669';
+            ctx.beginPath();
+            ctx.moveTo(-12, -8);
+            ctx.lineTo(-38, -18);
+            ctx.lineTo(-34, -4);
+            ctx.lineTo(-12, 8);
+            ctx.closePath();
+            ctx.fill();
+
+            // Main Torso
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.roundRect(-16, -18, 34, 28, 7);
+            ctx.fill();
+
+            // Lighter Belly Scales
+            ctx.fillStyle = '#6ee7b7';
+            ctx.fillRect(-2, -12, 16, 20);
+
+            // Back Spikes
+            ctx.fillStyle = '#047857';
+            ctx.fillRect(-14, -23, 6, 5);
+            ctx.fillRect(-4, -25, 6, 7);
+            ctx.fillRect(6, -28, 6, 5);
+
+            // T-Rex Head & Snout
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.roundRect(6, -40, 32, 22, 6);
+            ctx.fill();
+
+            // Jaw & White Teeth
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(22, -18, 4, 4);
+            ctx.fillRect(29, -18, 4, 4);
+            ctx.fillStyle = '#059669';
+            ctx.fillRect(12, -15, 22, 6);
+
+            // Expressive Eye
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(20, -35, 8, 8);
+            ctx.fillStyle = '#070a12';
+            ctx.fillRect(24, -33, 4, 4);
+
+            // Tiny Cute T-Rex Arms
+            ctx.fillStyle = '#059669';
+            ctx.fillRect(15, -8, 10, 5);
+
+            // Animated Legs
+            const legOffset = isRunning ? Math.sin(time * 0.022 * speedFactor) * 11 : 0;
+            ctx.fillStyle = '#047857';
+            ctx.fillRect(-8 + legOffset * 0.5, 8, 9, 15 - legOffset * 0.3);
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(4 - legOffset * 0.5, 8, 9, 15 + legOffset * 0.3);
+
+            ctx.restore();
+
+            // Spawn footstep dust particles while running
+            if (isRunning && Math.random() < 0.35) {
+                state.particles.push({
+                    x: x - 18,
+                    y: y + 20,
+                    vx: -3 - Math.random() * 2,
+                    vy: -Math.random() * 1.5,
+                    r: 2 + Math.random() * 4,
+                    color: 'rgba(148, 163, 184, 0.5)',
+                    alpha: 0.7,
+                    decay: 0.04,
+                    gravity: 0
+                });
+            }
+        }
+
+        // Draw Flaming Meteors (Near-misses & Fatal Crash Meteor)
+        function drawMeteorObject(x, y, radius, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+
+            // Outer fiery tail
+            const grad = ctx.createLinearGradient(0, 0, radius * 3.8, 0);
+            grad.addColorStop(0, 'rgba(255, 69, 0, 0.95)');
+            grad.addColorStop(0.5, 'rgba(245, 158, 11, 0.6)');
+            grad.addColorStop(1, 'rgba(255, 30, 66, 0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(0, -radius * 0.85);
+            ctx.lineTo(radius * 4.2, 0);
+            ctx.lineTo(0, radius * 0.85);
+            ctx.closePath();
+            ctx.fill();
+
+            // Glowing molten core
+            ctx.fillStyle = '#fef08a';
+            ctx.shadowColor = '#ff1e42';
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Asteroid craters
+            ctx.fillStyle = '#7c2d12';
+            ctx.beginPath();
+            ctx.arc(-radius * 0.3, -radius * 0.2, radius * 0.28, 0, Math.PI * 2);
+            ctx.arc(radius * 0.25, radius * 0.3, radius * 0.22, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Draw Collectible Bonus Fruits & Green Krypton Meteor Crystals on the track
+        function drawBonusItemsOnTrack(now) {
+            for (let i = state.bonusItems.length - 1; i >= 0; i--) {
+                const item = state.bonusItems[i];
+                if (state.phase === 'RUNNING') {
+                    item.x -= item.vx;
+                }
+                const bobY = item.baseY + Math.sin(now * 0.008 + item.bobPhase) * 6;
+
+                // Check collision with Dino (if not a high fake-out item)
+                const distX = Math.abs(item.x - (dinoPos.x + 10));
+                if (state.phase === 'RUNNING' && !item.collected && !item.isFakeout && distX < 28) {
+                    // Double check collecting won't accidentally exceed crashPoint
+                    if (state.baseMultiplier + state.bonusMultiplier + item.bonus < state.crashPoint) {
+                        item.collected = true;
+                        state.bonusMultiplier = Number((state.bonusMultiplier + item.bonus).toFixed(2));
+                        playSfx('bonus');
+                        spawnConfetti(item.x, bobY);
+                        document.getElementById('bonusAccumulatorBadge').textContent = `Bonus Items: +${state.bonusMultiplier.toFixed(2)}x`;
+
+                        state.floatingTexts.push({
+                            text: `${item.emoji} +${item.bonus.toFixed(2)}x!`,
+                            x: dinoPos.x + 15,
+                            y: dinoPos.y - 55,
+                            color: item.color,
+                            alpha: 1.0,
+                            vy: -1.7
+                        });
+
+                        appendRngLog(
+                            `Bonus recolectado: ${item.emoji} ${item.label} (+${item.bonus.toFixed(2)}x)`,
+                            'text-emerald-400'
+                        );
+                        state.bonusItems.splice(i, 1);
+                        continue;
+                    } else {
+                        // Force last-second jump over head if right at crash threshold!
+                        item.isFakeout = true;
+                        item.baseY = dinoPos.y - 95;
+                    }
+                }
+
+                // If fakeout item passes directly above Dino, show a teasing message!
+                if (state.phase === 'RUNNING' && item.isFakeout && !item.missedLogged && item.x < dinoPos.x) {
+                    item.missedLogged = true;
+                    state.floatingTexts.push({
+                        text: `¡INALCANZABLE! (${item.emoji} +${item.bonus.toFixed(2)}x)`,
+                        x: dinoPos.x,
+                        y: dinoPos.y - 85,
+                        color: '#94a3b8',
+                        alpha: 0.95,
+                        vy: -1.1
+                    });
+                    appendRngLog(
+                        `Esquiva PRNG: ${item.emoji} +${item.bonus.toFixed(2)}x pasó alto (Tier ${state.currentTierIndex})`,
+                        'text-amber-400'
+                    );
+                }
+
+                // Remove off-screen items
+                if (item.x < -60) {
+                    state.bonusItems.splice(i, 1);
+                    continue;
+                }
+
+                // Render glowing aura + emoji + bonus badge
+                ctx.save();
+                ctx.translate(item.x, bobY);
+                ctx.shadowColor = item.color;
+                ctx.shadowBlur = 16;
+
+                // Outer energy ring
+                ctx.strokeStyle = item.color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, 0, 17, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Emoji icon
+                ctx.font = '20px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(item.emoji, 0, 1);
+
+                // Value tag underneath
+                ctx.font = '900 10px "JetBrains Mono", monospace';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(`+${item.bonus.toFixed(2)}x`, 0, 26);
+                ctx.restore();
+            }
+        }
+
+        /* ============================================================================
+           7. MAIN ANIMATION & GAME LOOP (AGONIZING ~8.5s PACING FROM 0.00x TO 1.00x)
+           ============================================================================ */
+        // Custom multi-stage slow curve starting at 0.00x:
+        // - 0s to 8.5s: crawls slowly from 0.00x to 1.00x ("House Dead Zone" - long psychological sweat!)
+        // - 8.5s to 16.5s: climbs from 1.00x to 2.00x (8 seconds of tension)
+        // - 16.5s to 24.5s: climbs from 2.00x to 4.50x
+        // - >24.5s: exponential frenzy
+        function getSlowSuspenseMultiplier(elapsedSec) {
+            if (elapsedSec <= 8.5) {
+                return Math.pow(elapsedSec / 8.5, 1.12) * 1.00;
+            } else if (elapsedSec <= 16.5) {
+                const t1 = elapsedSec - 8.5;
+                return 1.00 + Math.pow(t1 / 8.0, 1.25) * 1.00;
+            } else if (elapsedSec <= 24.5) {
+                const t2 = elapsedSec - 16.5;
+                return 2.00 + Math.pow(t2 / 8.0, 1.42) * 2.50;
+            } else {
+                const t3 = elapsedSec - 24.5;
+                return 4.50 + Math.pow(t3 * 0.50, 2.0);
+            }
+        }
+
+        function mainLoop(now) {
+            // 1. Handle WAITING Countdown Phase
+            if (state.phase === 'WAITING') {
+                const elapsed = now - state.waitStartTime;
+                const remaining = Math.max(0, state.waitDuration - elapsed);
+                const pct = (remaining / state.waitDuration) * 100;
+                document.getElementById('countdownBar').style.width = `${pct}%`;
+                document.getElementById('countdownTimerText').textContent = `${(remaining / 1000).toFixed(1)}s`;
+
+                if (remaining <= 0) {
+                    startRunningPhase();
+                }
+            }
+
+            // 2. Handle RUNNING Phase
+            else if (state.phase === 'RUNNING') {
+                const elapsedSec = (now - state.startTime) / 1000;
+                state.baseMultiplier = getSlowSuspenseMultiplier(elapsedSec);
+                const nextMult = state.baseMultiplier + state.bonusMultiplier;
+
+                // Update Breakdown HUD
+                document.getElementById('multiplierBreakdown').textContent =
+                    `Base: ${state.baseMultiplier.toFixed(2)}x + Bonus Frutas: +${state.bonusMultiplier.toFixed(2)}x`;
+
+                // Update Pace HUD indicator & central multiplier color when crossing 1.00x
+                const paceBadge = document.getElementById('paceIndicatorBadge');
+                const multEl = document.getElementById('multiplierReadout');
+                const banner = document.getElementById('roundStateBanner');
+
+                if (nextMult < 1.0) {
+                    paceBadge.textContent = 'Zona Casa (0x-1x): Agonía Lenta';
+                    paceBadge.className = 'text-rose-400 font-mono-num font-bold';
+                    multEl.className = 'font-mono-num text-6xl sm:text-8xl font-black text-amber-400 tracking-tighter mult-shadow';
+                } else if (nextMult < 2.0) {
+                    paceBadge.textContent = 'Ritmo: Tensión Media (1x-2x)';
+                    paceBadge.className = 'text-sky-400 font-mono-num font-bold';
+                    multEl.className = 'font-mono-num text-6xl sm:text-8xl font-black text-white tracking-tighter mult-shadow';
+                    banner.textContent = '🦖 ¡ZONA DE GANANCIA (> 1.00x)! ¿RETIRAS O ARRIESGAS POR MÁS FRUTAS?';
+                    banner.className = 'mt-2 px-4 py-1 rounded-full bg-slate-900/85 border border-neonGreen/50 text-xs font-extrabold uppercase tracking-widest text-neonGreen';
+                } else if (nextMult < 4.5) {
+                    paceBadge.textContent = 'Ritmo: Acelerando (2x-4.5x)';
+                    paceBadge.className = 'text-amber-400 font-mono-num font-bold';
+                } else {
+                    paceBadge.textContent = 'Ritmo: ¡Frenesí Volcánico!';
+                    paceBadge.className = 'text-neonRed font-mono-num font-bold animate-pulse';
+                }
+
+                // Scroll world smoothly even while the multiplier timer crawls slowly
+                const scrollSpeed = Math.min(16, 3.4 + nextMult * 1.25);
+                worldScroll += scrollSpeed;
+
+                // Sound effects for footsteps, rising tension & heartbeat suspense
+                if (now - state.lastStepSoundTime > Math.max(115, 270 - scrollSpeed * 10)) {
+                    playSfx('step');
+                    state.lastStepSoundTime = now;
+                }
+                if (now - state.lastRiserSoundTime > 260) {
+                    playSfx('riser', state.multiplier);
+                    state.lastRiserSoundTime = now;
+                }
+                const heartbeatInterval = Math.max(360, 920 - nextMult * 130);
+                if (now - state.lastHeartbeatTime > heartbeatInterval) {
+                    playSfx('heartbeat');
+                    state.lastHeartbeatTime = now;
+                }
+
+                // Check PRNG Bonus Fruit / Crystal Spawn every ~1.65 seconds
+                if (now - state.lastBonusSpawnCheckTime > 1650 && state.crashPoint - nextMult > 0.08) {
+                    state.lastBonusSpawnCheckTime = now;
+                    trySpawnBonusItem();
+                }
+
+                // Periodic "Seismic Asteroid Danger Wave" every ~3.4 seconds
+                if (now - state.lastDangerWaveTime > 3400 && state.crashPoint - nextMult > 0.12) {
+                    state.lastDangerWaveTime = now;
+                    if (nextRNG() < 0.70) {
+                        triggerNearMissWave();
+                    }
+                }
+
+                // Check Auto-Cashout for Bet 1 & Bet 2
+                [1, 2].forEach(slot => {
+                    const b = state.bets[slot];
+                    const autoChecked = document.getElementById(`autoCheck${slot}`).checked;
+                    const autoTarget = parseFloat(document.getElementById(`autoMult${slot}`).value) || 2.00;
+                    if (b.active && !b.cashedOut && autoChecked && nextMult >= autoTarget && state.crashPoint >= autoTarget) {
+                        executeCashout(slot, autoTarget);
+                    }
+                });
+
+                // Update active cashout button amounts
+                if (state.bets[1].active && !state.bets[1].cashedOut) syncBetButtonUI(1);
+                if (state.bets[2].active && !state.bets[2].cashedOut) syncBetButtonUI(2);
+
+                // FOMO Taunt Box: If player cashed out early or skipped round, show how much they missed!
+                if ((state.playerCashedOutEarlyMult && nextMult > state.playerCashedOutEarlyMult + 0.25) || (state.playerSkippedRound && nextMult > 1.25)) {
+                    const fomoBox = document.getElementById('fomoTauntBox');
+                    const fomoAmt = document.getElementById('fomoTauntAmount');
+                    const refBet = parseInt(document.getElementById('betAmount1').value) || 2000;
+                    fomoBox.classList.remove('hidden');
+                    fomoAmt.textContent = `Con ${formatCLP(refBet)} tendrías: ${formatCLP(refBet * nextMult)}`;
+                }
+
+                // Spawn visible Fatal Meteor slightly before reaching crashPoint so user sees it descend!
+                const multRemaining = state.crashPoint - nextMult;
+                if (multRemaining <= 0.05 && !state.FatalMeteor) {
+                    playSfx('siren');
+                    document.getElementById('seismicAlertBanner').classList.remove('hidden');
+                    state.FatalMeteor = {
+                        startX: cw * 0.86,
+                        startY: -55,
+                        x: cw * 0.86,
+                        y: -55,
+                        progress: 0
+                    };
+                }
+
+                if (state.FatalMeteor) {
+                    state.FatalMeteor.progress = Math.min(1, state.FatalMeteor.progress + 0.085);
+                    state.FatalMeteor.x = state.FatalMeteor.startX + (dinoPos.x - state.FatalMeteor.startX) * state.FatalMeteor.progress;
+                    state.FatalMeteor.y = state.FatalMeteor.startY + (dinoPos.y - state.FatalMeteor.startY) * state.FatalMeteor.progress;
+                }
+
+                // Trigger Crash when multiplier reaches crashPoint
+                if (nextMult >= state.crashPoint) {
+                    triggerCrashPhase();
+                } else {
+                    state.multiplier = nextMult;
+                    document.getElementById('multiplierReadout').textContent = `${state.multiplier.toFixed(2)}x`;
+                }
+            }
+
+            // 3. RENDER SCENE ON CANVAS
+            ctx.save();
+            if (state.cameraShake > 0) {
+                const dx = (Math.random() - 0.5) * state.cameraShake;
+                const dy = (Math.random() - 0.5) * state.cameraShake;
+                ctx.translate(dx, dy);
+                state.cameraShake *= 0.88;
+                if (state.cameraShake < 0.5) state.cameraShake = 0;
+            }
+
+            const groundY = ch * 0.78;
+            drawSkyAndAtmosphere();
+            drawParallaxMountainsAndTrees(groundY);
+            drawGroundTrack(groundY);
+
+            // Overhead danger shadow when asteroid passes nearby
+            if (state.dangerShadowAlpha > 0) {
+                ctx.fillStyle = `rgba(255, 30, 66, ${state.dangerShadowAlpha * 0.35})`;
+                ctx.fillRect(0, 0, cw, ch);
+                state.dangerShadowAlpha *= 0.94;
+                if (state.dangerShadowAlpha < 0.02) state.dangerShadowAlpha = 0;
+            }
+
+            // Draw Collectible Bonus Fruits & Green Meteor Crystals
+            drawBonusItemsOnTrack(now);
+
+            // Update & Draw Near-Miss Meteors
+            for (let i = state.nearMisses.length - 1; i >= 0; i--) {
+                const nm = state.nearMisses[i];
+                nm.progress += nm.speed;
+                const curX = nm.x + (nm.targetX - nm.x) * nm.progress;
+                const curY = nm.y + (nm.targetY - nm.y) * nm.progress;
+                const angle = Math.atan2(nm.y - nm.targetY, nm.x - nm.targetX);
+
+                drawMeteorObject(curX, curY, 10, angle);
+
+                if (nm.progress >= 1) {
+                    playSfx('nearmiss');
+                    state.cameraShake = 9;
+                    spawnAsteroidExplosion(curX, curY);
+                    state.floatingTexts.push({
+                        text: '¡CASI IMPACTO! 🔥',
+                        x: dinoPos.x + 10,
+                        y: dinoPos.y - 55,
+                        color: '#f59e0b',
+                        alpha: 1.0,
+                        vy: -1.4
+                    });
+                    state.nearMisses.splice(i, 1);
+                }
+            }
+
+            // Draw Dino Character
+            drawDinoCharacter(dinoPos.x, dinoPos.y, now);
+
+            // Draw Fatal Incoming Asteroid
+            if (state.FatalMeteor && state.phase === 'RUNNING') {
+                const angle = Math.atan2(state.FatalMeteor.startY - dinoPos.y, state.FatalMeteor.startX - dinoPos.x);
+                drawMeteorObject(state.FatalMeteor.x, state.FatalMeteor.y, 24, angle);
+            }
+
+            // Update & Draw Particles (Explosions, Dust, Confetti)
+            for (let i = state.particles.length - 1; i >= 0; i--) {
+                const p = state.particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.gravity;
+                p.alpha -= p.decay;
+
+                if (p.alpha <= 0) {
+                    state.particles.splice(i, 1);
+                    continue;
+                }
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
+            // Update & Draw Floating Texts ("¡CASI IMPACTO!", "+$15.000")
+            for (let i = state.floatingTexts.length - 1; i >= 0; i--) {
+                const ft = state.floatingTexts[i];
+                ft.y += ft.vy;
+                ft.alpha -= 0.02;
+                if (ft.alpha <= 0) {
+                    state.floatingTexts.splice(i, 1);
+                    continue;
+                }
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, ft.alpha);
+                ctx.font = '900 14px Inter, sans-serif';
+                ctx.fillStyle = ft.color;
+                ctx.shadowColor = '#000';
+                ctx.shadowBlur = 6;
+                ctx.fillText(ft.text, ft.x - 45, ft.y);
+                ctx.restore();
+            }
+
+            // Screen Impact Flash Overlay
+            if (state.screenFlash > 0) {
+                ctx.fillStyle = `rgba(255, 30, 66, ${state.screenFlash})`;
+                ctx.fillRect(0, 0, cw, ch);
+                state.screenFlash *= 0.84;
+                if (state.screenFlash < 0.02) state.screenFlash = 0;
+            }
+
+            ctx.restore();
+            requestAnimationFrame(mainLoop);
+        }
+
+        // Initialize Game on Load
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            updateBalanceDisplay();
+            renderHistoryRibbon();
+            renderUserMemoryRibbon();
+            startWaitingPhase();
+            requestAnimationFrame(mainLoop);
+        });
+    </script>
+</body>
+</html>
