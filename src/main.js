@@ -47,17 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 <img src="${juego.imagen}" alt="${juego.nombre}">
                 <div class="info-juego">
                     <h4>${juego.nombre}</h4>
-                    <p>Apuesta min: ${formatearDinero(juego.minBet)} | max: ${formatearDinero(juego.maxBet)}</p>
+                    <p>Apuesta min: ${mostrarDineroCLP(juego.minBet)} | max: ${mostrarDineroCLP(juego.maxBet)}</p>
                     <p>${juego.regla}</p>
                 </div>
             `;
 
       card.addEventListener("click", () => {
         seleccionarJuego(juego);
-        console.log("Juego seleccionado para el Integrante 1:", juego);
-
-        const eventoJuego = new CustomEvent("juegoSeleccionado", { detail: juego });
-        window.dispatchEvent(eventoJuego);
+        console.log("Juego seleccionado:", juego);
+        localStorage.setItem("saldoCasino", obtenerSaldo());
+        window.location.href = "juegos/casino_crash_dino_game (1).html";
       });
 
       contenedorJuegos.appendChild(card);
