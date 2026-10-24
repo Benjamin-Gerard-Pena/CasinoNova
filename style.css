@@ -60,7 +60,8 @@ main {
     gap: 10px;
 }
 .barra{
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
 }
 .zona_superior {
     background-color: #06181F;
@@ -91,7 +92,8 @@ main {
     border-radius: 12px;
     color:white;
     border: none;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     height: 400px;
     overflow: hidden;
     display: flex;
