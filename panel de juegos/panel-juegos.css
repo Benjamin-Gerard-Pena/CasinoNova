@@ -1,0 +1,15 @@
+.contenedor-juegos-universal{
+    display: flex;
+    width: 80%;
+    max-width: 1000px;
+    margin: 30px auto;
+    justify-content: center;
+}
+#frame-juego {
+    width: 100%;
+    height: 650px;
+    border: 1px solid #CF1EF7;
+    border-radius: 10px;
+    background-color: #06181F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}

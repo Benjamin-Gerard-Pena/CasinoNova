@@ -16,3 +16,23 @@ function ZonaSuperior (){
 }
 CargarHeader();
 ZonaSuperior();
+function CargarJuegoUniversal(){
+    const parametros = new URLSearchParams(window.location.search);
+    const juegoelegido = parametros.get("juego");
+    const frame = document.getElementById("frame-juego");
+    if (frame && juegoelegido){
+        if (juegoelegido == "dino"){
+            frame.src = "../juegos/dino/index.html";
+        }
+        else if (juegoelegido == "ruleta"){
+            frame.src = "../juegos/ruleta/index.html";
+        }
+        else if (juegoelegido == " black"){
+            frame.src = "../juegos/black/index.html";
+        }
+        else if (juegoelegido == "avion"){
+            frame.src = "../juegos/avion/index.html";
+        }
+    }
+    CargarJuegoUniversal();
+}
