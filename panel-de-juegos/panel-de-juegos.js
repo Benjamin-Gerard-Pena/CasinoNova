@@ -36,3 +36,9 @@ function CargarJuegoUniversal(){
     }
 }
 CargarJuegoUniversal();
+const btnVolver = document.getElementById("btn-volver");
+if (btnVolver) {
+    btnVolver.addEventListener("click", () => {
+        window.location.href = "../index.html";
+    });
+}

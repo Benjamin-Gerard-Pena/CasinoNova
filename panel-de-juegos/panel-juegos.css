@@ -13,3 +13,16 @@
     background-color: #06181F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
+.btn-volver-esquina{
+    top: 20px;
+    left: 20px;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #CF1EF7;
+    color: #06181F;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+}
