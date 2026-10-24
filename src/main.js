@@ -6,7 +6,7 @@ import {
   suscribirCambios
 } from "./state.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+function iniciarCasino(){
   const contenedorJuegos = document.getElementById("contenedor-juegos");
   const textoSaldo = document.getElementById("texto-saldo");
   const barraBusqueda = document.getElementById("barra");
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         seleccionarJuego(juego);
         console.log("Juego seleccionado:", juego);
         localStorage.setItem("saldoCasino", obtenerSaldo());
-        window.location.href = "juegos/casino_crash_dino_game (1).html";
+        window.location.href = `panel-juegos/pagina-principal-juegos.html?juego=${juego.id || juego.nombre.toLowerCase()}`;
       });
 
       contenedorJuegos.appendChild(card);
@@ -80,4 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.actualizarSaldoCasino = actualizarSaldo;
-});
+}
+if (window.headerYaEstaListo) {
+  iniciarCasino();
+} else {
+  window.addEventListener("headerListo", iniciarCasino);
+}
