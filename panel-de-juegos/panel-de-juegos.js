@@ -1,3 +1,4 @@
+import { obtenerSaldo, actualizarSaldo, suscribirCambios } from "../src/state.js";
 function CargarHeader() {
 const contenedor = document.getElementById("contenedor-header-pricipal");
 if (contenedor) {
@@ -11,11 +12,25 @@ function ZonaSuperior (){
     if (contenedorZona) {
         fetch("../zona_superior.html")
             .then(response => response.text())
-            .then(html=> {document.getElementById("contenedor-zona-superior").innerHTML = html})
+            .then(html=> {
+                contenedorZona.innerHTML = html;
+                const textoSaldo = document.getElementById("texto-saldo");
+                if (textoSaldo) {
+                    textoSaldo.textContent = `$${obtenerSaldo().toLocaleString("es-CL")} CLP`;
+                }
+                suscribirCambios((nuevoEstado) => {
+                    if (nuevoEstado) {
+                        textoSaldo.textContent = `$${nuevoEstado.saldo.toLocaleString("es-CL")} CLP`;
+                    }
+                });
+            })
             .catch(error => console.log("la cagamos en algo",error));}
 }
 CargarHeader();
 ZonaSuperior();
+window.actualizarSaldoCasino = function(nuevoSaldo) {
+    actualizarSaldo(nuevoSaldo);
+};
 function CargarJuegoUniversal(){
     const parametros = new URLSearchParams(window.location.search);
     const juegoelegido = parametros.get("juego");
