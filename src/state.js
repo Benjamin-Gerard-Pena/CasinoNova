@@ -1,5 +1,6 @@
+const saldoGuardado = localStorage.getItem("saldoCasino");
 const estado = {
-    saldo: 1000000, // Saldo inicial ficticio
+    saldo: saldoGuardado ? parseInt(saldoGuardado) : 0,
     juegoSeleccionado: null
 };
 
@@ -19,6 +20,7 @@ export function obtenerSaldo() {
 
 export function actualizarSaldo(nuevoSaldo) {
     estado.saldo = nuevoSaldo;
+    localStorage.setItem("saldoCasino", nuevoSaldo);
     notificarCambios();
 }
 
