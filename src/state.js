@@ -1,6 +1,6 @@
 const saldoGuardado = localStorage.getItem("saldoCasino");
 const estado = {
-    saldo: saldoGuardado ? parseInt(saldoGuardado) : 0,
+    saldo: saldoGuardado ? parseInt(saldoGuardado) : 100000,
     juegoSeleccionado: null
 };
 
