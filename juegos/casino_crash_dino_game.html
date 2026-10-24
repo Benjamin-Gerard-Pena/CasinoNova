@@ -713,6 +713,9 @@
         function updateBalanceDisplay() {
             document.getElementById('balanceDisplay').textContent = formatCLP(state.balance);
             localStorage.setItem("saldoCasino", state.balance);
+            if (window.parent && typeof window.parent.actualizarSaldoCasino === 'function') {
+                window.parent.actualizarSaldoCasino(state.balance);
+            }
         }
 
         function toggleDevMonitor() {
