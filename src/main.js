@@ -56,7 +56,7 @@ function iniciarCasino(){
         seleccionarJuego(juego);
         console.log("Juego seleccionado:", juego);
         localStorage.setItem("saldoCasino", obtenerSaldo());
-        window.location.href = `panel-juegos/pagina-principal-juegos.html?juego=${juego.id || juego.nombre.toLowerCase()}`;
+        window.location.href = `panel-de-juegos/pagina-principal-juegos.html?juego=${juego.id || juego.nombre.toLowerCase()}`;
       });
 
       contenedorJuegos.appendChild(card);

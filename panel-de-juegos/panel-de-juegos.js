@@ -22,17 +22,17 @@ function CargarJuegoUniversal(){
     const frame = document.getElementById("frame-juego");
     if (frame && juegoelegido){
         if (juegoelegido == "dino"){
-            frame.src = "../juegos/dino/index.html";
+            frame.src = "../juegos/casino_crash_dino_game.html";
         }
         else if (juegoelegido == "ruleta"){
             frame.src = "../juegos/ruleta/index.html";
         }
-        else if (juegoelegido == " black"){
+        else if (juegoelegido == "blackjack"){
             frame.src = "../juegos/black/index.html";
         }
-        else if (juegoelegido == "avion"){
+        else if (juegoelegido == "slots"){
             frame.src = "../juegos/avion/index.html";
         }
     }
-    CargarJuegoUniversal();
 }
+CargarJuegoUniversal();

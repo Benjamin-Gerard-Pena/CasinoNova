@@ -32,10 +32,10 @@
             .then(response => response.text())
             .then(html => {
                 contenedorZona.innerHTML = html;
-                window.headerYaListo = true;
+                window.headerYaEstaListo = true;
                 window.dispatchEvent(new Event("headerListo"));
             })
-            .catch(error => console.error("la cagamos en el index", error));
+            .catch(error => console.error("error en el index", error));
     }
 </script>
 </body>
