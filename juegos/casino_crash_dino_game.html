@@ -1227,55 +1227,66 @@
         document.getElementById('betAmount1').addEventListener('input', () => syncBetButtonUI(1));
         document.getElementById('betAmount2').addEventListener('input', () => syncBetButtonUI(2));
 
-        function handleBetClick(slot) {
+        function handleBetClick(slot){
             const b = state.bets[slot];
             const inputEl = document.getElementById(`betAmount${slot}`);
             const desiredAmount = parseInt(inputEl.value) || 0;
 
-            // If RUNNING and bet is active & not cashed out -> CASH OUT NOW!
+            // 1. Si está corriendo y ya apostó -> RETIRAR PLATA (Cashout)
             if (state.phase === 'RUNNING' && b.active && !b.cashedOut) {
                 executeCashout(slot, state.multiplier);
                 return;
             }
 
-            // If WAITING phase: toggle bet placement immediately
-            if (state.phase === 'WAITING') {
-                if (b.active) {
-                    // Cancel bet and refund
-                    playSfx('click');
-                    state.balance += b.amount;
-                    b.active = false;
-                    updateBalanceDisplay();
-                    syncBetButtonUI(slot);
-                    updateDevWaitingPreview();
-                } else {
-                    if (desiredAmount < 500 || desiredAmount > state.balance) {
-                        shakePanel(slot);
-                        return;
-                    }
-                    playSfx('click');
-                    state.balance -= desiredAmount;
-                    b.amount = desiredAmount;
-                    b.active = true;
-                    b.cashedOut = false;
-                    updateBalanceDisplay();
-                    syncBetButtonUI(slot);
-                    updateDevWaitingPreview();
-                }
+            // 2. Si quiere cancelar una apuesta que ya hizo
+            if (state.phase === 'WAITING' && b.active) {
+                playSfx('click');
+                state.balance += b.amount;
+                b.active = false;
+                updateBalanceDisplay();
+                syncBetButtonUI(slot);
+                updateDevWaitingPreview();
                 return;
             }
 
-            // If RUNNING or CRASHED: allow queueing/canceling bet for NEXT round
+            // 3. Si quiere cancelar una apuesta en cola
             if (b.queued) {
                 playSfx('click');
                 b.queued = false;
                 syncBetButtonUI(slot);
+                return;
+            }
+
+            // ========================================================
+            // 4. AQUÍ ENTRA EL GUARDIA: VALIDACIÓN UNIVERSAL DE APUESTA
+            // ========================================================
+            if (window.parent && typeof window.parent.validarApuestaUniversal === 'function') {
+                // Le preguntamos al panel principal si la apuesta cumple las reglas
+                const pasaElGuardia = window.parent.validarApuestaUniversal(desiredAmount);
+                if (!pasaElGuardia) {
+                    shakePanel(slot); // Hacemos temblar el panel del Dino en rojo
+                    return; // Si el guardia dice NO, cortamos todo aquí mismo, no apuesta nada
+                }
             } else {
-                if (desiredAmount < 500 || desiredAmount > state.balance) {
+                // Respaldo penca por si el juego se abre solo sin el panel
+                if (desiredAmount <= 0 || desiredAmount > state.balance) {
                     shakePanel(slot);
                     return;
                 }
-                playSfx('click');
+            }
+
+            // 5. Si el Guardia dio el OK, descontamos las lucas y apostamos
+            playSfx('click');
+            if (state.phase === 'WAITING') {
+                state.balance -= desiredAmount;
+                b.amount = desiredAmount;
+                b.active = true;
+                b.cashedOut = false;
+                updateBalanceDisplay();
+                syncBetButtonUI(slot);
+                updateDevWaitingPreview();
+            } else {
+                // Si el juego ya arrancó, queda en cola para la otra ronda
                 b.amount = desiredAmount;
                 b.queued = true;
                 syncBetButtonUI(slot);

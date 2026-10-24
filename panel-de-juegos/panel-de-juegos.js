@@ -1,4 +1,5 @@
 import { obtenerSaldo, actualizarSaldo, suscribirCambios } from "../src/state.js";
+import { juegosDisponibles } from "../src/dataJuegos.js";
 function CargarHeader() {
 const contenedor = document.getElementById("contenedor-header-pricipal");
 if (contenedor) {
@@ -57,3 +58,41 @@ if (btnVolver) {
         window.location.href = "../index.html";
     });
 }
+window.validarApuestaUniversal= function (monto){
+    const saldoActual = obtenerSaldo();
+    const parametros = new URLSearchParams(window.location.search);
+    const juegoelegido = parametros.get("juego");
+    const reglasJuego = juegosDisponibles.find(j => j.id === juegoelegido) || { minBet: 0, maxBet: 9999999 };
+    const cajaError = document.getElementById("overlay-error-universal");
+    const textoError = document.getElementById("alerta-error-universal");
+    function dispararError(mensaje) {
+        textoError.textContent = mensaje;
+        cajaError.style.display = "flex";
+        setTimeout(() => {
+            cajaError.style.display = "none";
+        }, 3500);
+    }
+    if (monto === "" || monto === null || isNaN(monto)) {
+        dispararError("Error: Ingresa un monto numérico válido.");
+        return false;
+    }
+    const montoNum = Number(monto);
+    if(montoNum<=0 || !Number.isInteger(montoNum)){
+        dispararError("Error: La apuesta debe ser un número entero y mayor a 0.")
+        return false;
+    }
+    if(montoNum > saldoActual){
+        dispararError("Error: el saldo es insuficiente")
+        return false;
+    }
+    if(montoNum < reglasJuego.minBet){
+        dispararError("Error: estas bajo la apuesta minima ")
+        return false;
+    }
+    if(montoNum > reglasJuego.maxBet){
+        dispararError("Error: estas sobre la apuesta maxima ")
+        return false;
+    }
+    return true;
+}
+
