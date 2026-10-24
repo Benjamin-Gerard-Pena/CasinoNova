@@ -1,7 +1,7 @@
 export const juegosDisponibles = [
     {
         id: "ruleta",
-        nombre: "Ruleta Europea",
+        nombre: "Ruleta", //quien le puso europea?? XD
         minBet: 1000,
         maxBet: 500000,
         regla: "Elige un número o color (Rojo/Negro). Multiplicador x2.",
@@ -24,8 +24,8 @@ export const juegosDisponibles = [
         imagen: "images/slots.jpg"
     },
     {
-        id: "aviator",
-        nombre: "Aviator",
+        id: "dino", //hay q cambiarlo por el dino
+        nombre: "Dino",
         minBet: 2500,
         maxBet: 600000,
         regla: "Detén el vuelo antes de que choque para cobrar.",
