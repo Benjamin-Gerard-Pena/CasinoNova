@@ -6,13 +6,16 @@
             font-family: "Helvetica Neue", Helvetica,serif;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Casino Nova</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="contenedor-zona-superior"></div>
+
 <main>
-    <div id="contenedor-zona-superior" ></div>
     <div class="juegos" id="juegos">
         <h3> Juegos: </h3>
     </div>
@@ -24,19 +27,18 @@
 </footer>
 
 <script type="module" src="src/main.js"></script>
-
-<script>
-    const contenedorZona = document.getElementById("contenedor-zona-superior");
-    if (contenedorZona) {
-        fetch("zona_superior.html")
-            .then(response => response.text())
-            .then(html => {
-                contenedorZona.innerHTML = html;
-                window.headerYaEstaListo = true;
-                window.dispatchEvent(new Event("headerListo"));
-            })
-            .catch(error => console.error("error en el index", error));
-    }
-</script>
+<div id="mesa-juegos" class="modal-oculto">
+    <div class="contenido">
+        <button id="cerrar-mesa" aria-label="Cerrar mesa de juegos">X</button>
+        <h2>Mesa de Juegos</h2>
+        <div id="mensaje-feedback" class="oculto">
+            <form id="formulario apuesta">
+                <label for="monto-apuesta">Monto de la apuesta:</label>
+                <input type="number" id="monto-apuesta" min="1" placeholder="100">
+                <button type="submit" class="boton-apostar">Jugar</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

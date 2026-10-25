@@ -80,6 +80,7 @@ main {
     max-width: 600px;
     margin: 40px;
     font-size: 1.2rem;
+    flex-wrap: wrap;
 }
 .botones{
     display:flex;
@@ -154,4 +155,45 @@ main {
 .pie-pagina {
     background-color: #06181F;
     text-align: center;
+}
+.modal-oculto{
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    justify-content: center;    
+    align-items: center;
+    z-index: 1000;
+    background-color: rgba(21, 2, 32, 0.5);
+}
+.contenido-modal{
+    background-color: #06181F;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+.boton-apostar{
+    background-color:#CF1EF7 ;
+    color: #06181F;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+}
+.boton-apostar:hover{
+    background-color:#9B0EB3 ;
+}
+.alerta-error{
+    background-color: #FF0000;
+    color: white;
+    padding: 10px;
+    border: 1px solid #FF0000;  
+    border-radius: 5px;
+    margin-top: 15px;   
+}
+.oculto{
+    display: none;
 }
