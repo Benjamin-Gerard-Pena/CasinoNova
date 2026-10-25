@@ -27,6 +27,19 @@
 </footer>
 
 <script type="module" src="src/main.js"></script>
+<script>
+    const contenedorZona = document.getElementById("contenedor-zona-superior");
+    if (contenedorZona) {
+        fetch("zona_superior.html")
+            .then(response => response.text())
+            .then(html => {
+                contenedorZona.innerHTML = html;
+                window.headerYaEstaListo = true;
+                window.dispatchEvent(new Event("headerListo"));
+            })
+            .catch(error => console.error("error en el index", error));
+    }
+</script>
 <div id="mesa-juegos" class="modal-oculto">
     <div class="contenido">
         <button id="cerrar-mesa" aria-label="Cerrar mesa de juegos">X</button>
