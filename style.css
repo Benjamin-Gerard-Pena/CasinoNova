@@ -87,6 +87,7 @@ main {
     gap:20px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .botton-interactivo{
     background-color:#021d28;
@@ -196,4 +197,35 @@ main {
 }
 .oculto{
     display: none;
+}
+a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 3px solid #CF1EF7;
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    .zona_superior {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+    .barra {
+        width: 100%;
+    }
+    .contenedor_superior {
+        flex-wrap: wrap;
+    }
+    .contenedor-perfil {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .contenedor-sesion {
+        flex-direction: column;
+    }
+    .formulario_inicio_sesion, .imagen_inicio_sesion {
+        width: 100%;
+    }
+    .imagen_inicio_sesion {
+        display: none;
+    }
 }

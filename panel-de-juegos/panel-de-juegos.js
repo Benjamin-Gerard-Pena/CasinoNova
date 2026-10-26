@@ -1,13 +1,6 @@
 import { obtenerSaldo, actualizarSaldo, suscribirCambios } from "../src/state.js";
 import { juegosDisponibles } from "../src/dataJuegos.js";
-function CargarHeader() {
-const contenedor = document.getElementById("contenedor-header-pricipal");
-if (contenedor) {
-    fetch("../header.html")
-    .then(response => response.text())
-    .then(codigohtml=> {contenedor.innerHTML = codigohtml})
-    .catch(error => console.error("fallo la carga del header",error));}
-}
+
 function ZonaSuperior (){
     const contenedorZona = document.getElementById("contenedor-zona-superior");
     if (contenedorZona) {
@@ -27,7 +20,7 @@ function ZonaSuperior (){
             })
             .catch(error => console.log("la cagamos en algo",error));}
 }
-CargarHeader();
+
 ZonaSuperior();
 window.actualizarSaldoCasino = function(nuevoSaldo) {
     actualizarSaldo(nuevoSaldo);
