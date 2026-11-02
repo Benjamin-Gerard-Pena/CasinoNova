@@ -229,3 +229,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
         display: none;
     }
 }
+#frame-inicio_sesion{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 70%;
+}
