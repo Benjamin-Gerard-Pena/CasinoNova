@@ -11,5 +11,9 @@
   "devDependencies": {
     "prettier": "^3.3.1",
     "vite": "^5.1.6"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "mongoose": "^9.12.0"
   }
 }
