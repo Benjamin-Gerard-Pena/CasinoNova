@@ -235,3 +235,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     width: 70%;
     height: 70%;
 }
+#frame-crear-cuenta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 650px;
+    border: 1px solid #CF1EF7;
+    border-radius: 10px;
+    background-color: #06181F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
