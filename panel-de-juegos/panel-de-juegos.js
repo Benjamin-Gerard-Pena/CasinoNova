@@ -89,3 +89,24 @@ window.validarApuestaUniversal= function (monto){
     return true;
 }
 
+const Partida = require('./modelos/Partida');
+const registrarApuestaEnBase = async (idJugador, idJuego, montoApostado, resultadoMultiplicador) => {
+    try {
+        const premioCalculado = montoApostado * resultadoMultiplicador;
+        const nuevaPartida = new Partida({
+            usuarioId: idJugador,
+            juegoId: idJuego,
+            apuesta: montoApostado,
+            premio: premioCalculado,
+            resultado: resultadoMultiplicador >= 1 ? 'GANADO' : 'PERDIDO',
+            saldoAnterior: 10000,
+            saldoPosterior: 10000 - montoApostado + premioCalculado
+        });
+
+        await nuevaPartida.save();
+        console.log('Partida guardadita para tu imperio de venta de datos');
+
+    } catch (error) {
+        console.error('Error al guardar la partida:', error);
+    }
+};
