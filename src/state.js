@@ -1,6 +1,6 @@
 const saldoGuardado = localStorage.getItem("saldoCasino");
 const estado = {
-    saldo: saldoGuardado ? parseInt(saldoGuardado) : 100000,
+    saldo: saldoGuardado !== null ? parseInt(saldoGuardado, 10) : 100000,
     juegoSeleccionado: null
 };
 
@@ -19,8 +19,8 @@ export function obtenerSaldo() {
 }
 
 export function actualizarSaldo(nuevoSaldo) {
-    estado.saldo = nuevoSaldo;
-    localStorage.setItem("saldoCasino", nuevoSaldo);
+    estado.saldo = Number(nuevoSaldo);
+    localStorage.setItem("saldoCasino", estado.saldo);
     notificarCambios();
 }
 
@@ -31,4 +31,17 @@ export function seleccionarJuego(juego) {
 
 export function obtenerJuegoSeleccionado() {
     return estado.juegoSeleccionado;
+}
+
+export async function sincronizarSaldoDesdeBD() {
+    const usuarioActual = localStorage.getItem("usuarioCasino") || "benjamin";
+    try {
+        const res = await fetch(`http://localhost:3000/api/saldo/${usuarioActual}`);
+        const data = await res.json();
+        if (data.ok && typeof data.saldo === "number") {
+            actualizarSaldo(data.saldo);
+        }
+    } catch (err) {
+        console.warn("Usando saldo local mientras conecta la API...");
+    }
 }

@@ -725,12 +725,29 @@
             bar.classList.toggle('hidden', !state.devMonitorVisible);
         }
 
-        function rechargeBalance() {
+        async function rechargeBalance() {
             playSfx('click');
-            state.balance += 50000;
-            state.initialDeposit += 50000;
-            updateBalanceDisplay();
-            showWinToast('RECARGA DEMO', '+$50.000');
+            const monto = 50000;
+            const usuario = localStorage.getItem("usuarioCasino") || "benjamin";
+            try {
+                const res = await fetch("http://localhost:3000/api/deposito", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ usuario, monto })
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    state.balance = data.nuevoSaldo;
+                    state.initialDeposit += monto;
+                    updateBalanceDisplay();
+                    showWinToast('RECARGA DEMO', '+$50.000');
+                }
+            } catch (e) {
+                state.balance += monto;
+                state.initialDeposit += monto;
+                updateBalanceDisplay();
+                showWinToast('RECARGA LOCAL', '+$50.000');
+            }
         }
 
         function updateHouseProfitDisplay() {
@@ -1310,6 +1327,9 @@
             state.playerCashedOutEarlyMult = mult;
 
             updateBalanceDisplay();
+            if (window.parent && typeof window.parent.registrarApuestaEnBase === 'function') {
+                window.parent.registrarApuestaEnBase('dino', b.amount, mult, state.balance);
+            }
             playSfx('cashout');
             spawnConfetti(dinoPos.x, dinoPos.y - 30);
             state.floatingTexts.push({
@@ -1495,6 +1515,11 @@
                     roundBetTotal += b.amount;
                     if (b.cashedOut) {
                         roundPayoutTotal += Math.round(b.amount * b.cashoutMult);
+                    } else {
+                        // AQUÍ CONECTAMOS CON TU API: El meteorito explotó y el jugador perdió (multiplicador 0)
+                        if (window.parent && typeof window.parent.registrarApuestaEnBase === 'function') {
+                            window.parent.registrarApuestaEnBase('dino', b.amount, 0, state.balance);
+                        }
                     }
                 }
             });
