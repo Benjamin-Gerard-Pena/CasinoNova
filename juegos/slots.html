@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Uva Cocktail</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+    <style>
+        :root {
+            --bg: #150a1f;
+            --ink: #f4e9fb;
+            --panel: #24113a;
+            --muted: #b9a2cc;
+            --accent: #b46af0;
+            --gold: #f2b705;
+            --gold-light: #ffe066;
+            --cab: #2b0f45;
+            --cab2: #431a68;
+            --cell: #fff8e7;
+            --win: #22c55e;
+            --fail: #ef4444;
+            --near: #f59e0b;
+        }
+        * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        html, body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg);
+            background-image:
+                    radial-gradient(circle at 50% 0%, rgba(180, 106, 240, 0.24), transparent 65%),
+                    radial-gradient(circle at 50% 100%, rgba(242, 183, 5, 0.14), transparent 60%),
+                    repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 10px);
+            color: var(--ink);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 10px;
+        }
+        main {
+            width: min(98vw, 590px);
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .marquee {
+            background: linear-gradient(180deg, #351454 0%, #170726 100%);
+            border: 3px solid var(--gold);
+            border-bottom: none;
+            border-radius: 18px 18px 0 0;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 -4px 20px rgba(242, 183, 5, 0.18), inset 0 2px 5px rgba(255,255,255,0.2);
+            margin: 0 10px;
+        }
+        .marquee::before {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border: 1px dashed rgba(242, 183, 5, 0.45);
+            border-radius: 14px 14px 0 0;
+            pointer-events: none;
+        }
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .title-stack {
+            display: flex;
+            flex-direction: column;
+        }
+        .vip-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 1.8px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(18px, 4.2vh, 28px);
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #ffffff 15%, var(--gold-light) 55%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 0 #1a062b) drop-shadow(0 0 10px rgba(242,183,5,0.4));
+        }
+
+        #mascot {
+            width: clamp(40px, 9.5vh, 56px);
+            height: clamp(40px, 9.5vh, 56px);
+            cursor: pointer;
+            flex: none;
+            -webkit-tap-highlight-color: transparent;
+            animation: bob 2.2s ease-in-out infinite;
+            transform-origin: 50% 90%;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+        }
+        #mascot svg { width: 100%; height: 100%; overflow: visible; }
+        @keyframes bob { 50% { transform: translateY(-4px) rotate(3deg); } }
+        @keyframes squish { 30% { transform: scale(1.25, .72); } 60% { transform: scale(.85, 1.2) translateY(-8px); } 100% { transform: scale(1); } }
+        @keyframes jump { 40% { transform: translateY(-22px) rotate(-14deg) scale(1.15); filter: drop-shadow(0 15px 12px rgba(242,183,5,0.8)); } 70% { transform: translateY(0) rotate(10deg); } 100% { transform: scale(1); } }
+        @keyframes dizzy { to { transform: rotate(360deg); } }
+        #mascot.squish { animation: squish .45s; }
+        #mascot.happy { animation: jump .5s 2; }
+        #mascot.dizzy { animation: dizzy .35s linear infinite; }
+        .eye { transition: transform .2s; }
+        .cool { display: none; }
+        #mascot.cool-on .cool { display: block; }
+        #mascot.cool-on .eye { display: none; }
+
+        .mode-pill {
+            background: #0e0418;
+            border: 1.5px solid var(--accent);
+            padding: 4px 9px;
+            border-radius: 8px;
+            text-align: right;
+            box-shadow: inset 0 0 10px rgba(180,106,240,0.25);
+        }
+        .mode-pill small {
+            display: block;
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        .mode-pill b {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--gold);
+        }
+
+        .bubble {
+            position: absolute;
+            left: 72px;
+            top: -6px;
+            background: #12061f;
+            color: var(--gold-light);
+            border: 2px solid var(--gold);
+            border-radius: 12px 12px 12px 2px;
+            padding: 5px 10px;
+            font-weight: 800;
+            font-size: 11px;
+            opacity: 0;
+            transform: translateY(6px) scale(0.9);
+            transition: .2s;
+            pointer-events: none;
+            z-index: 20;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.75);
+            white-space: nowrap;
+        }
+        .bubble.show { opacity: 1; transform: none; }
+
+        .cab {
+            background: linear-gradient(180deg, var(--cab2) 0%, var(--cab) 65%, #19072a 100%);
+            border: 4px solid var(--gold);
+            border-radius: 20px;
+            padding: 10px 12px;
+            position: relative;
+            box-shadow:
+                    0 20px 50px rgba(0,0,0,0.85),
+                    0 0 25px rgba(242, 183, 5, 0.18),
+                    inset 0 2px 3px rgba(255,255,255,0.25),
+                    inset 0 -8px 20px rgba(0,0,0,0.7);
+            transition: border-color .25s, box-shadow .25s, transform .2s;
+        }
+        .cab.tier-5 {
+            border-color: #c084fc;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.85), 0 0 35px rgba(180, 106, 240, 0.45), inset 0 0 18px rgba(180, 106, 240, 0.25);
+        }
+        .cab.tier-9 {
+            border-color: var(--gold-light);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.85), 0 0 45px rgba(242, 183, 5, 0.55), inset 0 0 22px rgba(242, 183, 5, 0.3);
+        }
+        .cab.shake { animation: shakeMax 0.28s ease-in-out infinite; }
+        .cab.fever {
+            border-color: #ff3b6b !important;
+            box-shadow: 0 0 55px rgba(255, 59, 107, 0.95), inset 0 0 28px rgba(255, 216, 74, 0.6) !important;
+        }
+        .cab.near-miss {
+            border-color: var(--fail) !important;
+            box-shadow: 0 0 42px rgba(239, 68, 68, 0.85), inset 0 0 22px rgba(239, 68, 68, 0.45) !important;
+        }
+
+        @keyframes shakeMax {
+            0% { transform: translate(0,0) rotate(0deg); }
+            20% { transform: translate(-10px, 6px) rotate(-1.8deg); }
+            40% { transform: translate(10px, -6px) rotate(1.8deg); }
+            60% { transform: translate(-8px, -4px) rotate(-1.2deg); }
+            80% { transform: translate(8px, 4px) rotate(1.2deg); }
+            100% { transform: translate(0,0) rotate(0deg); }
+        }
+
+        .reel-frame {
+            background: #090210;
+            padding: 8px;
+            border-radius: 14px;
+            border: 3px solid #633294;
+            position: relative;
+            box-shadow: inset 0 0 26px #000, 0 4px 12px rgba(0,0,0,0.6);
+        }
+        .cab.tier-9 .reel-frame {
+            border-color: var(--gold);
+            box-shadow: inset 0 0 26px #000, 0 0 18px rgba(242, 183, 5, 0.35);
+        }
+        .reels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 7px;
+            position: relative;
+        }
+        .reels::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(9,2,16,0.52) 0%, transparent 18%, transparent 82%, rgba(9,2,16,0.52) 100%);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .reel {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 7px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            padding: 2px;
+        }
+
+        .cell {
+            height: clamp(50px, 16.5vh, 84px);
+            background: radial-gradient(circle at 50% 32%, #ffffff 0%, var(--cell) 68%, #e4d3b5 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(26px, 8.5vh, 46px);
+            line-height: 1;
+            position: relative;
+            box-shadow:
+                    0 3px 0 #b8a382,
+                    0 5px 10px rgba(0,0,0,0.55),
+                    inset 0 2px 2px #ffffff;
+            transition: transform .18s cubic-bezier(.2,1.4,.4,1), background .18s, box-shadow .18s;
+        }
+        .cell.sev {
+            color: #d4101e;
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(24px, 7.8vh, 44px);
+            text-shadow: 0 3px 0 #59040a, 0 0 12px rgba(212,16,30,0.35);
+        }
+        .cell.win {
+            background: radial-gradient(circle at 50% 30%, #a7f3d0 0%, var(--win) 70%, #15803d 100%);
+            color: #fff;
+            animation: popWin .35s infinite alternate;
+            box-shadow: 0 0 20px var(--win), 0 0 0 3px #ffffff inset;
+            transform: scale(1.07);
+            z-index: 5;
+        }
+        .cell.near-win {
+            background: radial-gradient(circle at 50% 30%, #fef08a 0%, var(--near) 75%, #b45309 100%);
+            box-shadow: 0 0 15px var(--near), 0 0 0 2px #fff inset;
+            transform: scale(1.03);
+            z-index: 4;
+        }
+        .cell.fail {
+            background: radial-gradient(circle at 50% 30%, #fecaca 0%, var(--fail) 70%, #991b1b 100%);
+            color: #fff;
+            animation: shakeCell .32s ease-in-out 2;
+            box-shadow: 0 0 22px var(--fail), 0 0 0 3px #ffffff inset;
+            transform: scale(1.05);
+            z-index: 6;
+        }
+        .cell.fail::after {
+            content: "¡FALTÓ ÉSTA!";
+            position: absolute;
+            bottom: 2px;
+            left: 3px;
+            right: 3px;
+            background: #450a0a;
+            color: #fecaca;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 7px;
+            font-weight: 800;
+            text-align: center;
+            padding: 1px 0;
+            border-radius: 4px;
+            border: 1px solid #f87171;
+        }
+
+        @keyframes popWin { to { transform: scale(1.12); filter: brightness(1.15); } }
+        @keyframes shakeCell {
+            0%, 100% { transform: translateX(0) scale(1.05); }
+            25% { transform: translateX(-5px) rotate(-3deg) scale(1.07); }
+            75% { transform: translateX(5px) rotate(3deg) scale(1.07); }
+        }
+        .cell.landed { animation: land .22s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes land {
+            from { transform: translateY(-18px) scale(0.85); opacity: .4; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .reel.spinning .cell {
+            filter: blur(2.5px) brightness(0.9);
+            transform: scale(0.95);
+        }
+        .reel.teasing {
+            animation: teaseShake 0.09s infinite;
+            background: rgba(242, 183, 5, 0.22);
+            box-shadow: 0 0 18px var(--gold);
+        }
+        @keyframes teaseShake {
+            0% { transform: translateY(3px); }
+            50% { transform: translateY(-3px); }
+            100% { transform: translateY(3px); }
+        }
+
+        #ov {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            z-index: 7;
+            filter: drop-shadow(0 0 6px rgba(0,0,0,0.85));
+        }
+
+        .ticker {
+            margin: 8px 0;
+            background: #0d0417;
+            border: 1.5px solid rgba(180, 106, 240, 0.35);
+            border-radius: 10px;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 32px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
+        }
+        .msg {
+            text-align: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: clamp(11px, 2.5vh, 13.5px);
+            letter-spacing: 0.3px;
+        }
+
+        .lines-deck {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(13, 4, 23, 0.65);
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .lines-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .lines {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            flex: 1;
+        }
+        .lines button {
+            padding: 7px 4px;
+            background: #140724;
+            border: 1.5px solid rgba(180,106,240,0.35);
+            border-radius: 9px;
+            color: var(--ink);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+            transition: transform 0.1s, filter 0.15s, box-shadow 0.15s;
+        }
+        .lines button span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 9px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        .lines button:hover:not(:disabled) { filter: brightness(1.15); }
+        .lines button:active:not(:disabled) { transform: scale(0.96); }
+        .lines button:disabled { opacity: .45; cursor: not-allowed; }
+        .lines button.on {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            color: #1e0933;
+            border-color: #fff;
+            box-shadow: 0 0 14px rgba(242, 183, 5, 0.55);
+        }
+        .lines button.on span { color: #3b1760; font-weight: 800; }
+
+        .fall {
+            position: fixed;
+            top: -40px;
+            pointer-events: none;
+            z-index: 50;
+            animation: fall linear forwards;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+
+        #party {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 60;
+            background: radial-gradient(circle, rgba(43,15,69,0.75) 0%, rgba(10,3,18,0.88) 100%);
+            backdrop-filter: blur(4px);
+        }
+        #party.show { display: flex; }
+        .pbox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: pin .38s cubic-bezier(.2, 1.6, .4, 1);
+        }
+        .pgrape {
+            width: min(36vh, 180px);
+            aspect-ratio: 1;
+            position: relative;
+            isolation: isolate;
+        }
+        .pgrape svg { width: 100%; height: 100%; overflow: visible; }
+        .pgrape::before {
+            content: "";
+            position: absolute;
+            inset: -48%;
+            background: repeating-conic-gradient(rgba(242,183,5,0.55) 0 12deg, transparent 12deg 24deg);
+            border-radius: 50%;
+            -webkit-mask: radial-gradient(circle, #000 25%, transparent 68%);
+            mask: radial-gradient(circle, #000 25%, transparent 68%);
+            animation: spin 3.5s linear infinite;
+            z-index: -1;
+        }
+        .ptext {
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(22px, 6.5vh, 38px);
+            color: var(--gold-light);
+            -webkit-text-stroke: 2px #1a062b;
+            paint-order: stroke fill;
+            text-align: center;
+            text-shadow: 0 4px 0 #1a062b, 0 0 26px rgba(242,183,5,0.85);
+            line-height: 1.15;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        .win .pgrape svg, .big .pgrape svg { animation: dance .28s ease-in-out infinite alternate; }
+        .big .pgrape { width: min(44vh, 230px); }
+        .lose { align-items: flex-end; padding-bottom: 10vh; background: rgba(10, 3, 18, 0.45); backdrop-filter: blur(2px); }
+        .lose .pgrape { width: min(24vh, 120px); }
+        .lose .pgrape::before { display: none; }
+        .lose .pgrape svg { animation: laugh .14s linear infinite; }
+        .lose .ptext { font-size: clamp(16px, 4.5vh, 24px); color: #fecaca; -webkit-text-stroke: 1.5px #450a0a; }
+        .lose .eye { transform: scaleY(.2); transform-box: fill-box; transform-origin: center; }
+
+        @keyframes pin { from { transform: scale(0) rotate(-18deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+        @keyframes dance { from { transform: rotate(-14deg) translateY(0); } to { transform: rotate(14deg) translateY(-18px) scale(1.1); } }
+        @keyframes laugh { 0% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-7px) rotate(6deg); } 100% { transform: translateY(0) rotate(-6deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+<main>
+    <div class="marquee">
+        <div class="brand-wrap">
+            <div id="mascot" role="button" tabindex="0" aria-label="Anfitrión Uva">
+                <svg viewBox="0 0 100 100">
+                    <path d="M50 10 Q58 -2 72 4 Q64 14 50 14Z" fill="#3fa34d"/>
+                    <rect x="48" y="8" width="4" height="14" rx="2" fill="#6b4a2b"/>
+                    <g fill="#7b2cbf"><circle cx="30" cy="34" r="15"/><circle cx="70" cy="34" r="15"/><circle cx="50" cy="40" r="17"/><circle cx="38" cy="62" r="15"/><circle cx="62" cy="62" r="15"/><circle cx="50" cy="82" r="14"/></g>
+                    <g fill="#a35de0" opacity=".7"><circle cx="44" cy="33" r="5"/><circle cx="24" cy="29" r="3"/><circle cx="64" cy="29" r="3"/></g>
+                    <g class="eye"><circle cx="42" cy="44" r="6" fill="#fff"/><circle cx="58" cy="44" r="6" fill="#fff"/><circle class="pupil" cx="43" cy="45" r="3" fill="#1b0a2a"/><circle class="pupil" cx="59" cy="45" r="3" fill="#1b0a2a"/></g>
+                    <g class="cool"><rect x="33" y="38" width="15" height="10" rx="3" fill="#111"/><rect x="52" y="38" width="15" height="10" rx="3" fill="#111"/><rect x="47" y="41" width="6" height="3" fill="#111"/></g>
+                    <path id="mouth" d="M43 54 Q50 61 57 54" stroke="#1b0a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="title-stack">
+                <span class="vip-badge">HIGH VOLATILITY · 97% RTP</span>
+                <h1>Uva Cocktail</h1>
+            </div>
+        </div>
+        <div class="mode-pill">
+            <small>Potencia</small>
+            <b id="tier-badge">MAX 9L · OVERDRIVE</b>
+        </div>
+        <div class="bubble" id="bubble"></div>
+    </div>
+
+    <div class="cab tier-9" id="cab">
+        <div class="reel-frame">
+            <div class="reels" id="reels">
+                <svg id="ov"></svg>
+            </div>
+        </div>
+
+        <div class="ticker">
+            <div class="msg" id="msg">ELIGE TUS LÍNEAS Y PRESIONA APOSTAR EN EL PANEL</div>
+        </div>
+
+        <div class="lines-deck">
+            <span class="lines-label">Líneas Activas</span>
+            <div class="lines" id="lines"></div>
+        </div>
+    </div>
+</main>
+
+<div id="party" aria-hidden="true"></div>
+
+<script>
+    const SYMS=[
+        {s:'🍒',w:6,p:{2:3,3:16,4:66,5:330}},
+        {s:'🍋',w:6,p:{3:16,4:66,5:330}},
+        {s:'🍊',w:5,p:{3:26,4:99,5:495}},
+        {s:'🍎',w:5,p:{3:26,4:99,5:495}},
+        {s:'🍉',w:4,p:{3:40,4:165,5:825}},
+        {s:'🍍',w:4,p:{3:50,4:198,5:990}},
+        {s:'🍇',w:3,p:{3:66,4:330,5:1650}},
+        {s:'7',w:2,p:{3:165,4:825,5:6600}}
+    ];
+    const LINES=[[1,1,1,1,1],[0,0,0,0,0],[2,2,2,2,2],[0,1,2,1,0],[2,1,0,1,2],[0,0,1,2,2],[2,2,1,0,0],[1,0,0,0,1],[1,2,2,2,1]];
+    const LINE_OPTS=[1,3,5,9];
+    const LINE_TAGS={1:'Base',3:'Triple',5:'Turbo',9:'Max VIP'};
+    const pool=SYMS.flatMap(x=>Array(x.w).fill(x.s));
+    const rnd=()=>{const a=new Uint32Array(1);let x;do{crypto.getRandomValues(a);x=a[0]}while(x>=4294967296-(4294967296%pool.length));return pool[x%pool.length]};
+    const $=id=>document.getElementById(id);
+
+    const saldoInicialLS = localStorage.getItem("saldoCasino");
+    let credits = saldoInicialLS ? parseInt(saldoInicialLS, 10) : 100000;
+    let currentBetAmount = 1000;
+    let nLines = 9;
+    let spinning = false;
+    let cells = [];
+
+    function formatCLP(n) {
+        return `$${Math.round(n).toLocaleString("es-CL")} CLP`;
+    }
+
+    function sincronizarSaldoGlobal(nuevoSaldo) {
+        credits = Math.max(0, Math.round(nuevoSaldo));
+        localStorage.setItem("saldoCasino", credits);
+        if (window.parent && window.parent !== window && typeof window.parent.actualizarSaldoCasino === "function") {
+            window.parent.actualizarSaldoCasino(credits);
+        }
+    }
+
+    async function enviarJugadaAMongo(montoApostado, mult, saldoFinal) {
+        if (window.parent && window.parent !== window && typeof window.parent.registrarApuestaEnBase === "function") {
+            window.parent.registrarApuestaEnBase("slots", montoApostado, mult, saldoFinal);
+            return;
+        }
+        try {
+            const usuarioActual = localStorage.getItem("usuarioCasino") || "benjamin";
+            await fetch("http://localhost:3000/api/partidas", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    usuario: usuarioActual,
+                    juegoId: "slots",
+                    apuesta: montoApostado,
+                    multiplicador: mult,
+                    saldoPosterior: saldoFinal
+                })
+            });
+        } catch (err) {
+            console.error("Error enviando jugada de slots a Mongo:", err);
+        }
+    }
+
+    let AC;
+    function tone(f,d=.12,type='triangle',delay=0,vol=.08){
+        try{
+            AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+            const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+delay;
+            o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+            o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);
+        }catch(e){}
+    }
+    const jingle=n=>[523,659,784,1047,1319,1568].slice(0,n).forEach((f,i)=>tone(f,.18,'square',i*.085,.075));
+
+    const reelsEl=$('reels');
+    for(let c=0;c<5;c++){
+        const r=document.createElement('div');r.className='reel';cells[c]=[];
+        for(let row=0;row<3;row++){const d=document.createElement('div');d.className='cell';r.appendChild(d);cells[c][row]=d}
+        reelsEl.insertBefore(r,$('ov'));
+    }
+    function setCell(c,r,s){const el=cells[c][r];el.textContent=s;el.classList.toggle('sev',s==='7')}
+    for(let c=0;c<5;c++)for(let r=0;r<3;r++)setCell(c,r,rnd());
+
+    LINE_OPTS.forEach(n=>{
+        const b=document.createElement('button');
+        b.type='button';
+        b.innerHTML=`${n}L<span>${LINE_TAGS[n]}</span>`;
+        b.dataset.n=n;
+        b.onclick=()=>{
+            if(spinning)return;
+            nLines=n;
+            tone(520+n*45,.09,'sawtooth');
+            refresh();
+            previewLines();
+        };
+        $('lines').appendChild(b);
+    });
+
+    const COLORS=['#22c55e','#38bdf8','#a855f7','#f59e0b','#ec4899','#14b8a6','#eab308','#f97316','#6366f1'];
+    function pts(line, maxCol=5){
+        const R=reelsEl.getBoundingClientRect();
+        return line.slice(0, maxCol).map((row,c)=>{
+            const b=cells[c][row].getBoundingClientRect();
+            return `${b.left-R.left+b.width/2},${b.top-R.top+b.height/2}`;
+        }).join(' ');
+    }
+    function drawLines(idx,thick){
+        $('ov').innerHTML=idx.map(i=>`<polyline points="${pts(LINES[i])}" fill="none" stroke="${COLORS[i]}" stroke-width="${thick?7:3}" stroke-linecap="round" stroke-linejoin="round" opacity="${thick?.95:.65}"/>`).join('');
+    }
+    function drawNearMissLine(lineIdx, failCol){
+        const line = LINES[lineIdx];
+        const fullPts = pts(line, failCol + 1);
+        $('ov').innerHTML = `<polyline points="${fullPts}" fill="none" stroke="#ef4444" stroke-width="6" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
+    }
+
+    let prevT;
+    function previewLines(){drawLines([...Array(nLines).keys()],false);clearTimeout(prevT);prevT=setTimeout(()=>$('ov').innerHTML='',1100)}
+
+    function refresh(){
+        document.querySelectorAll('.lines button').forEach(b=>{
+            b.classList.toggle('on',+b.dataset.n===nLines);
+            b.disabled=spinning;
+        });
+        const cab = $('cab');
+        cab.classList.toggle('tier-5', nLines===5);
+        cab.classList.toggle('tier-9', nLines===9);
+        $('tier-badge').textContent = nLines===9 ? 'MAX 9L · OVERDRIVE' : nLines===5 ? '5L · TURBO' : `${nLines}L · ESTÁNDAR`;
+    }
+
+    const mascot=$('mascot'),bubble=$('bubble');
+    let bt;
+    function say(t){bubble.textContent=t;bubble.classList.add('show');clearTimeout(bt);bt=setTimeout(()=>bubble.classList.remove('show'),2300)}
+    function anim(cls,ms){mascot.classList.remove('squish','happy','dizzy');void mascot.offsetWidth;mascot.classList.add(cls);if(ms)setTimeout(()=>mascot.classList.remove(cls),ms)}
+    function mouth(d){$('mouth').setAttribute('d',d)}
+    const SMILE='M43 54 Q50 61 57 54',BIG='M40 52 Q50 68 60 52 Z',OH='M46 55 Q50 62 54 55 Q50 52 46 55';
+    const TALK=['¡El algoritmo está caliente!','¡Con 9 líneas no se escapa!','¡Esa línea central pide premio!','¡Sube la apuesta abajo si te atreves!','¡Se viene el racimo dorado!'];
+    function poke(){anim('squish',450);tone(720+Math.random()*350,.1,'sine');mouth(BIG);setTimeout(()=>mouth(SMILE),500);say(TALK[Math.floor(Math.random()*TALK.length)])}
+    mascot.onclick=poke;
+    mascot.onkeydown=e=>{if(e.key==='Enter')poke()};
+    document.addEventListener('pointermove',e=>{
+        const r=mascot.getBoundingClientRect(),dx=Math.max(-2,Math.min(2,(e.clientX-r.left-r.width/2)/80)),dy=Math.max(-2,Math.min(2,(e.clientY-r.top-r.height/2)/80));
+        document.querySelectorAll('.pupil').forEach(p=>p.style.transform=`translate(${dx}px,${dy}px)`);
+    });
+
+    function rain(n,emoji){
+        for(let i=0;i<n;i++){
+            const e=document.createElement('div');e.className='fall';e.textContent=emoji[Math.floor(Math.random()*emoji.length)];
+            e.style.left=Math.random()*100+'vw';e.style.fontSize=(18+Math.random()*26)+'px';
+            e.style.animationDuration=(1.3+Math.random()*1.5)+'s';e.style.animationDelay=Math.random()*.35+'s';
+            document.body.appendChild(e);setTimeout(()=>e.remove(),3300);
+        }
+    }
+
+    let pt;
+    function party(kind,text,ms){
+        const p=$('party');
+        const svg=$('mascot').querySelector('svg').outerHTML.replace(' id="mouth"','');
+        p.className='show '+kind;
+        p.innerHTML=`<div class="pbox"><div class="pgrape">${svg}</div><div class="ptext">${text}</div></div>`;
+        p.querySelector('svg > path:last-child').setAttribute('d',BIG);
+        clearTimeout(pt);pt=setTimeout(()=>{p.className='';p.innerHTML=''},ms);
+    }
+    function laugh(){[0,1,2,3].forEach(i=>tone(i%2?370:450,.09,'square',i*.13,.05))}
+
+    function evaluate(grid, betTotal){
+        let win=0,hits=new Set(),nearHits=new Set(),fails=new Set(),winLines=[],bestNearMiss=null;
+        const betPerLine = betTotal / nLines;
+
+        for(let i=0;i<nLines;i++){
+            const line=LINES[i],first=grid[0][line[0]];
+            let n=1;
+            while(n<5&&grid[n][line[n]]===first)n++;
+
+            const symData=SYMS.find(x=>x.s===first);
+            const minWin=symData.p[2]?2:3;
+            const pay=symData.p[n];
+
+            if(pay){
+                win += Math.round(pay * betPerLine);
+                winLines.push(i);
+                for(let k=0;k<n;k++)hits.add(k+','+line[k]);
+            } else if(n === minWin - 1) {
+                const candidate = {
+                    lineIdx: i,
+                    count: n,
+                    symbol: first,
+                    failCol: n,
+                    failRow: line[n],
+                    potential: Math.round(symData.p[minWin] * betPerLine)
+                };
+                if(!bestNearMiss || candidate.potential > bestNearMiss.potential) {
+                    bestNearMiss = candidate;
+                }
+            }
+        }
+
+        if(win === 0 && bestNearMiss){
+            const line = LINES[bestNearMiss.lineIdx];
+            for(let k=0; k<bestNearMiss.count; k++){
+                nearHits.add(k + ',' + line[k]);
+            }
+            fails.add(bestNearMiss.failCol + ',' + bestNearMiss.failRow);
+        }
+
+        return{win,hits,nearHits,fails,winLines,bestNearMiss};
+    }
+
+    function spin(montoRecibido){
+        if(spinning) return;
+
+        const saldoLS = localStorage.getItem("saldoCasino");
+        if (saldoLS !== null) credits = parseInt(saldoLS, 10) || 0;
+
+        const betTotal = Number(montoRecibido || currentBetAmount);
+        if (!betTotal || betTotal <= 0) return;
+
+        if (betTotal > credits) {
+            $('msg').textContent = 'SALDO INSUFICIENTE · RECARGA EN DEPÓSITO';
+            return;
+        }
+
+        currentBetAmount = betTotal;
+        spinning = true;
+        sincronizarSaldoGlobal(credits - betTotal);
+
+        $('msg').textContent = nLines===9 ? `GIRO VIP 9L (${formatCLP(betTotal)})…` : nLines===5 ? `GIRO TURBO 5L (${formatCLP(betTotal)})…` : `GIRANDO (${formatCLP(betTotal)})…`;
+        $('party').className='';
+        $('ov').innerHTML='';
+        cells.flat().forEach(e=>e.classList.remove('win','fail','near-win'));
+        $('cab').classList.remove('near-miss','fever','shake');
+        anim('dizzy');mouth(OH);
+
+        const grid=Array.from({length:5},()=>[rnd(),rnd(),rnd()]);
+        const reelDivs=[...reelsEl.querySelectorAll('.reel')];
+        reelDivs.forEach(r=>r.classList.add('spinning'));
+        refresh();
+
+        const timers=reelDivs.map((_,c)=>setInterval(()=>{
+            for(let r=0;r<3;r++)setCell(c,r,rnd());
+            if(c===0)tone(320+Math.random()*90,.03,'square',0,.02);
+        },65));
+
+        reelDivs.forEach((_,c)=>setTimeout(()=>{
+            clearInterval(timers[c]);reelDivs[c].classList.remove('spinning');
+            for(let r=0;r<3;r++){
+                setCell(c,r,grid[c][r]);
+                cells[c][r].classList.remove('landed');
+                void cells[c][r].offsetWidth;
+                cells[c][r].classList.add('landed');
+            }
+            tone(210+c*65,.1,'square',0,.07);
+
+            if(c===2){
+                const hasThree = LINES.slice(0,nLines).some(l => grid[0][l[0]]===grid[1][l[1]] && grid[1][l[1]]===grid[2][l[2]]);
+                if(hasThree){
+                    reelDivs[3].classList.add('teasing');
+                    reelDivs[4].classList.add('teasing');
+                    $('msg').textContent='¡¡LÍNEA ACTIVA!! BUSCANDO MULTIPLICADOR MAYOR...';
+                    tone(780,.28,'sawtooth',0,.09);
+                }
+            }
+
+            if(c===4){
+                reelDivs.forEach(rd=>rd.classList.remove('teasing'));
+                finish(grid, betTotal);
+            }
+        },560+c*290));
+    }
+
+    function finish(grid, betTotal){
+        const{win,hits,nearHits,fails,winLines,bestNearMiss}=evaluate(grid, betTotal);
+        spinning=false;
+        mascot.classList.remove('dizzy');
+        mouth(SMILE);
+
+        if (win > 0) {
+            sincronizarSaldoGlobal(credits + win);
+        }
+
+        const multExacto = Number((win / betTotal).toFixed(2));
+        enviarJugadaAMongo(betTotal, multExacto, credits);
+
+        if(win > 0){
+            hits.forEach(k=>{const[c,r]=k.split(',');cells[c][r].classList.add('win')});
+            drawLines(winLines,true);
+
+            const mult = Math.max(1, Math.round(win / betTotal));
+            const highLinesBoost = nLines >= 5;
+            const isMega = mult >= 35 || (nLines===9 && mult >= 15);
+            const isStrong = mult >= 5 || (highLinesBoost && winLines.length >= 2);
+
+            if(isMega){
+                $('msg').textContent=`¡¡JACKPOT SUPREMO x${mult}!! +${formatCLP(win)}`;
+                jingle(6);anim('happy',1500);mouth(BIG);
+                $('cab').classList.add('shake','fever');
+                setTimeout(()=>$('cab').classList.remove('shake','fever'),3200);
+                mascot.classList.add('cool-on');setTimeout(()=>mascot.classList.remove('cool-on'),4200);
+                party('big cool-on',`¡¡MEGA JACKPOT x${mult}!!<br>+${formatCLP(win)}`,3000);
+                rain(85,['🍇','💎','✨','🔥','💰']);
+                say('¡¡ROMPISTE LA BANCA!!');
+            } else if(isStrong || nLines===9 || nLines===5){
+                const tag = nLines===9 ? 'OVERDRIVE 9L' : nLines===5 ? 'TURBO 5L' : `COMBO x${mult}`;
+                $('msg').textContent=`¡IMPACTO ${tag}! COBRO: +${formatCLP(win)}`;
+                jingle(5);anim('happy',1200);mouth(BIG);setTimeout(()=>mouth(SMILE),1300);
+                $('cab').classList.add('shake','fever');
+                setTimeout(()=>$('cab').classList.remove('shake','fever'),2200);
+                mascot.classList.add('cool-on');setTimeout(()=>mascot.classList.remove('cool-on'),2800);
+                party('big cool-on',`¡${tag}!<br>+${formatCLP(win)}`,2200);
+                rain(nLines===9 ? 55 : 35,['🍇','✨','🔥','💰']);
+                say(nLines===9 ? '¡Así paga el modo 9 líneas!' : '¡Tremendo golpe!');
+            } else {
+                $('msg').textContent=`¡LÍNEA GANADORA! +${formatCLP(win)}`;
+                jingle(3);anim('happy',800);
+                party('win',`¡COBRO!<br>+${formatCLP(win)}`,1400);
+                rain(14,['🍒','🍋','🍇']);
+                say('¡Suma y sigue!');
+            }
+        } else {
+            tone(155,.24,'sawtooth',0,.045);
+
+            if(bestNearMiss){
+                nearHits.forEach(k=>{const[c,r]=k.split(',');cells[c][r].classList.add('near-win')});
+                fails.forEach(k=>{const[c,r]=k.split(',');cells[c][r].classList.add('fail')});
+                drawNearMissLine(bestNearMiss.lineIdx, bestNearMiss.failCol);
+
+                $('cab').classList.add('near-miss');
+                setTimeout(()=>$('cab').classList.remove('near-miss'),1600);
+
+                $('msg').textContent=`¡A 1 SOLA FRUTA EN LÍNEA ${bestNearMiss.lineIdx+1}! CORTÓ +${formatCLP(bestNearMiss.potential)}`;
+                say(`¡Te faltó un solo ${bestNearMiss.symbol}!`);
+                tone(290,.15,'sawtooth',0,.07);
+                tone(240,.22,'sawtooth',.14,.07);
+            } else {
+                $('msg').textContent='SIN COMBINACIÓN · EL PRÓXIMO GIRO VIENE CARGADO';
+                laugh();
+                say('¡Estaba fría, dale otra!');
+            }
+        }
+
+        refresh();
+    }
+
+    window.addEventListener("message", (event) => {
+        const data = event.data;
+        if (!data || typeof data !== "object") return;
+
+        if (data.tipo === "EJECUTAR_APUESTA" || data.tipo === "ACCION_UNIVERSAL") {
+            spin(data.monto);
+        } else if (data.tipo === "ACTUALIZAR_MONTO") {
+            currentBetAmount = Number(data.monto) || currentBetAmount;
+        } else if (data.tipo === "SINCRONIZAR_SALDO") {
+            credits = Number(data.saldo) || 0;
+            localStorage.setItem("saldoCasino", credits);
+        }
+    });
+
+    refresh();
+    setTimeout(previewLines,350);
+    window.addEventListener('resize',()=>$('ov').innerHTML='');
+</script>
+</body>
+</html>

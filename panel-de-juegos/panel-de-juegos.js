@@ -96,14 +96,12 @@ window.actualizarSaldoCasino = function(nuevoSaldo) {
     actualizarSaldo(nuevoSaldo);
 };
 
-window.actualizarBotonUniversal = function(texto, modo = "APOSTAR", colorFondo = "#CF1EF7", colorTexto = "#06181F") {
+window.actualizarBotonUniversal = function(texto, modo = "APOSTAR") {
     const btnApostar = document.getElementById("btn-apostar-universal");
     modoBotonUniversal = modo;
-    if (btnApostar) {
-        btnApostar.textContent = texto;
-        btnApostar.style.backgroundColor = colorFondo;
-        btnApostar.style.color = colorTexto;
-    }
+    if (!btnApostar) return;
+
+    btnApostar.textContent = (modo === "CANCELAR" || modo === "RETIRAR") ? "CANCELAR APUESTA" : "APOSTAR";
 };
 
 window.validarApuestaUniversal = function(monto) {
