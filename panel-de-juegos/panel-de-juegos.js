@@ -96,7 +96,7 @@ window.actualizarSaldoCasino = function(nuevoSaldo) {
     actualizarSaldo(nuevoSaldo);
 };
 
-window.actualizarBotonUniversal = function(texto, modo = "APOSTAR", colorFondo = "#00e701", colorTexto = "#06181F") {
+window.actualizarBotonUniversal = function(texto, modo = "APOSTAR", colorFondo = "#CF1EF7", colorTexto = "#06181F") {
     const btnApostar = document.getElementById("btn-apostar-universal");
     modoBotonUniversal = modo;
     if (btnApostar) {
@@ -249,7 +249,12 @@ window.addEventListener("message", (event) => {
     } else if (data.tipo === "REGISTRAR_PARTIDA") {
         window.registrarApuestaEnBase(data.juegoId, data.apuesta, data.multiplicador, data.saldoPosterior);
     } else if (data.tipo === "ESTADO_BOTON_UNIVERSAL") {
-        window.actualizarBotonUniversal(data.texto, data.modo, data.colorFondo, data.colorTexto);
+        window.actualizarBotonUniversal(
+            data.texto,
+            data.modo,
+            data.colorFondo || "#CF1EF7",
+            data.colorTexto || "#06181F"
+        );
     }
 });
 
