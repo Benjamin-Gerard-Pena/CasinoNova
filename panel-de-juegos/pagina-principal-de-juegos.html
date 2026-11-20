@@ -1,26 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de juegos</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="panel-juegos.css">
 </head>
 <body>
-<div class="contenedor principal ">
+<div class="contenedor principal">
     <div id="contenedor-zona-superior"></div>
 </div>
+
 <div class="contenedor boton volver">
     <button id="btn-volver" class="btn-volver-esquina">Volver</button>
 </div>
-<div class = "contenedor-juegos-universal">
-<iframe id="frame-juego" src=""></iframe>
+
+<div class="contenedor-juegos-universal">
+    <iframe id="frame-juego" src=""></iframe>
+
+    <div class="barra-controles-universal">
+        <div class="bloque-control bloque-monto">
+            <div class="etiqueta-superior">
+                <span id="nombre-juego-activo">Juego</span>
+                <span id="limites-apuesta-activo">Min: $0 | Max: $0</span>
+            </div>
+            <div class="input-dinero">
+                <span class="simbolo-peso">$</span>
+                <input type="number" id="input-apuesta-universal" value="1000" min="1" step="500" placeholder="Monto CLP">
+            </div>
+        </div>
+
+        <div class="bloque-control bloque-rapidos">
+            <button type="button" class="btn-rapido" data-accion="+1000">+1K</button>
+            <button type="button" class="btn-rapido" data-accion="+5000">+5K</button>
+            <button type="button" class="btn-rapido" data-accion="HALF">1/2</button>
+            <button type="button" class="btn-rapido" data-accion="DOUBLE">2X</button>
+            <button type="button" class="btn-rapido btn-max" data-accion="MAX">MAX</button>
+        </div>
+
+        <div class="bloque-control bloque-accion">
+            <button type="button" id="btn-apostar-universal" class="btn-accion-principal">
+                APOSTAR
+            </button>
+        </div>
+    </div>
 </div>
+
 <div id="overlay-error-universal" style="display: none;">
     <div id="alerta-error-universal">
         <span id="texto-error-universal"></span>
     </div>
 </div>
+
 <script type="module" src="panel-de-juegos.js"></script>
 </body>
 </html>
